@@ -59,11 +59,11 @@ public class MinestarPlayer {
             throw new BukkitPlayerOfflineException(this.playerName);
 
         // UPDATE THE PLAYER
-        this.group = UtilPermissions.getGroupName(player);
+        this.updateGroup();
 
         // INITIALIZE NICKNAME & LISTNAME
-        this.setValue("nickName", this.playerName);
-        this.setValue("listName", this.playerName);
+        this.setString("nickName", this.playerName);
+        this.setString("listName", this.playerName);
 
         // LOAD DATA
         this.loadData();
@@ -74,21 +74,35 @@ public class MinestarPlayer {
     }
 
     public String getNickName() {
-        return this.getValueAsString("nickName");
+        return this.getString("nickName");
     }
 
     public void setNickName(String nickName) {
-        this.setValue("nickName", nickName);
+        this.setString("nickName", nickName);
         this.updateBukkitPlayer();
     }
 
     public String getListName() {
-        return this.getValueAsString("listName");
+        return this.getString("listName");
     }
 
     public void setListName(String listName) {
-        this.setValue("nickName", listName);
+        this.setString("nickName", listName);
         this.updateBukkitPlayer();
+    }
+
+    public String updateGroup() {
+        // ONLY UPDATE, IF ONLINE
+        if (this.isOffline())
+            return "default";
+
+        // GET THE PLAYER
+        Player player = PlayerUtils.getOnlinePlayer(this.playerName);
+        if (player == null)
+            throw new BukkitPlayerOfflineException(this.playerName);
+
+        this.group = UtilPermissions.getGroupName(player);
+        return getGroup();
     }
 
     public String getGroup() {
@@ -105,28 +119,40 @@ public class MinestarPlayer {
     //
     // ///////////////////////////////////////////////
 
-    public void setValue(String key, String value) {
+    public void setString(String key, String value) {
         this.valueList.put(key, value);
     }
 
-    public void setValue(String key, boolean value) {
-        this.setValue(key, String.valueOf(value));
+    public void setBoolean(String key, boolean value) {
+        this.setString(key, String.valueOf(value));
     }
 
-    public void setValue(String key, int value) {
-        this.setValue(key, String.valueOf(value));
+    public void setByte(String key, long value) {
+        this.setString(key, String.valueOf(value));
     }
 
-    public void setValue(String key, double value) {
-        this.setValue(key, String.valueOf(value));
+    public void setInteger(String key, int value) {
+        this.setString(key, String.valueOf(value));
     }
 
-    public void setValue(String key, float value) {
-        this.setValue(key, String.valueOf(value));
+    public void setDouble(String key, double value) {
+        this.setString(key, String.valueOf(value));
     }
 
-    public void setValue(String key, Location location) {
-        this.setValue(key, BlockUtils.LocationToString(location));
+    public void setFloat(String key, float value) {
+        this.setString(key, String.valueOf(value));
+    }
+
+    public void setLong(String key, long value) {
+        this.setString(key, String.valueOf(value));
+    }
+
+    public void setShort(String key, short value) {
+        this.setString(key, String.valueOf(value));
+    }
+
+    public void setLocation(String key, Location location) {
+        this.setString(key, BlockUtils.LocationToString(location));
     }
 
     // ///////////////////////////////////////////////
@@ -135,28 +161,40 @@ public class MinestarPlayer {
     //
     // ///////////////////////////////////////////////
 
-    public String getValueAsString(String key) {
+    public String getString(String key) {
         return this.valueList.get(key);
     }
 
-    public boolean getValueAsBoolean(String key) {
-        return Boolean.valueOf(this.getValueAsString(key));
+    public boolean getBoolean(String key) {
+        return Boolean.valueOf(this.getString(key));
     }
 
-    public int getValueAsInteger(String key) {
-        return Integer.valueOf(this.getValueAsString(key));
+    public byte getByte(String key) {
+        return Byte.valueOf(this.getString(key));
     }
 
-    public double getValueAsDouble(String key) {
-        return Double.valueOf(this.getValueAsString(key));
+    public int getInteger(String key) {
+        return Integer.valueOf(this.getString(key));
     }
 
-    public float getValueAsFloat(String key) {
-        return Float.valueOf(this.getValueAsString(key));
+    public double getDouble(String key) {
+        return Double.valueOf(this.getString(key));
     }
 
-    public Location getValueAsLocation(String key) {
-        return BlockUtils.LocationFromString(this.getValueAsString(key));
+    public float getFloat(String key) {
+        return Float.valueOf(this.getString(key));
+    }
+
+    public long getLong(String key) {
+        return Long.valueOf(this.getString(key));
+    }
+
+    public short getShort(String key) {
+        return Short.valueOf(this.getString(key));
+    }
+
+    public Location getLocation(String key) {
+        return BlockUtils.LocationFromString(this.getString(key));
     }
 
     /**

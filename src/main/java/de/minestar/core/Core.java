@@ -51,6 +51,7 @@ public class Core extends JavaPlugin {
         // PRINT INFO
         ConsoleUtils.printInfo(pluginName, "Enabled v" + this.getDescription().getVersion() + "!");
     }
+
     private void createManager() {
         this.playerManager = new PlayerManager();
     }
