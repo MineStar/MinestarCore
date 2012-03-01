@@ -1,4 +1,4 @@
-package de.minestar.SinCity.Listener;
+package de.minestar.core.listener;
 
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -8,7 +8,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
-import de.minestar.SinCity.Manager.PlayerManager;
+import de.minestar.core.manager.PlayerManager;
 
 public class ConnectionListener implements Listener {
 
