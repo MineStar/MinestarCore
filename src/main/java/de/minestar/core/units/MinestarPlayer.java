@@ -215,52 +215,71 @@ public class MinestarPlayer {
             // CREAT TEMP-FILE
             File tmpFile = new File(Core.dataFolder, "\\playerdata\\tmp_" + this.playerName + ".dat");
             FileOutputStream fileoutputstream = new FileOutputStream(tmpFile);
+
             NBTTagCompound NBTTag = new NBTTagCompound();
 
             // SAVE STRINGS
+            NBTTagCompound stringTag = new NBTTagCompound();
             for (Map.Entry<String, String> entry : this.stringList.entrySet()) {
-                NBTTag.setString(entry.getKey(), entry.getValue());
+                stringTag.setString(entry.getKey(), entry.getValue());
             }
+            NBTTag.setCompound("strings", stringTag);
 
             // SAVE SHORT
+            NBTTagCompound shortTag = new NBTTagCompound();
             for (Map.Entry<String, Short> entry : this.shortList.entrySet()) {
-                NBTTag.setShort(entry.getKey(), entry.getValue());
+                shortTag.setShort(entry.getKey(), entry.getValue());
             }
+            NBTTag.setCompound("short", shortTag);
 
             // SAVE INTEGER
+            NBTTagCompound intTag = new NBTTagCompound();
             for (Map.Entry<String, Integer> entry : this.integerList.entrySet()) {
-                NBTTag.setInt(entry.getKey(), entry.getValue());
+                intTag.setInt(entry.getKey(), entry.getValue());
             }
+            NBTTag.setCompound("integer", intTag);
 
             // SAVE LONG
+            NBTTagCompound longTag = new NBTTagCompound();
             for (Map.Entry<String, Long> entry : this.longList.entrySet()) {
-                NBTTag.setLong(entry.getKey(), entry.getValue());
+                longTag.setLong(entry.getKey(), entry.getValue());
             }
+            NBTTag.setCompound("long", longTag);
 
             // SAVE DOUBLE
+            NBTTagCompound doubleTag = new NBTTagCompound();
             for (Map.Entry<String, Double> entry : this.doubleList.entrySet()) {
-                NBTTag.setDouble(entry.getKey(), entry.getValue());
+                doubleTag.setDouble(entry.getKey(), entry.getValue());
             }
+            NBTTag.setCompound("double", doubleTag);
 
             // SAVE FLOAT
+            NBTTagCompound floatTag = new NBTTagCompound();
             for (Map.Entry<String, Float> entry : this.floatList.entrySet()) {
-                NBTTag.setFloat(entry.getKey(), entry.getValue());
+                floatTag.setFloat(entry.getKey(), entry.getValue());
             }
+            NBTTag.setCompound("float", floatTag);
 
             // SAVE BYTE
+            NBTTagCompound byteTag = new NBTTagCompound();
             for (Map.Entry<String, Byte> entry : this.byteList.entrySet()) {
-                NBTTag.setByte(entry.getKey(), entry.getValue());
+                byteTag.setByte(entry.getKey(), entry.getValue());
             }
+            NBTTag.setCompound("byte", byteTag);
 
             // SAVE BOOLEAN
+            NBTTagCompound boolTag = new NBTTagCompound();
             for (Map.Entry<String, Boolean> entry : this.booleanList.entrySet()) {
-                NBTTag.setBoolean(entry.getKey(), entry.getValue());
+                boolTag.setBoolean(entry.getKey(), entry.getValue());
             }
+            NBTTag.setCompound("boolean", boolTag);
 
             // SAVE LOCATIONS
+            NBTTagCompound locTag = new NBTTagCompound();
             for (Map.Entry<String, String> entry : this.locationList.entrySet()) {
-                NBTTag.setString(entry.getKey(), entry.getValue());
+                locTag.setString(entry.getKey(), entry.getValue());
             }
+            NBTTag.setCompound("locations", locTag);
 
             // GZIP THE TEMP-FILE
             CompressedStreamTools.writeGzippedCompoundToOutputStream(NBTTag, fileoutputstream);
@@ -277,7 +296,6 @@ public class MinestarPlayer {
             e.printStackTrace();
         }
     }
-
     /**
      * This method is a helper method for reading single values out of the file
      * 
@@ -387,103 +405,112 @@ public class MinestarPlayer {
                 // LOAD STRINGS
                 String s_value;
                 NBTTagCompound subTag = this.getSubTag(NBTTag, "strings");
-                for (Object base : subTag.d()) {
-                    if (base instanceof NBTBase) {
-                        NBTBase thisTag = (NBTBase) base;
-                        s_value = this.loadValueAsString(NBTTag, thisTag.getName());
-                        if (s_value != null)
-                            this.stringList.put(thisTag.getName(), s_value);
+                if (subTag != null)
+                    for (Object base : subTag.d()) {
+                        if (base instanceof NBTBase) {
+                            NBTBase thisTag = (NBTBase) base;
+                            s_value = this.loadValueAsString(NBTTag, thisTag.getName());
+                            if (s_value != null)
+                                this.stringList.put(thisTag.getName(), s_value);
+                        }
                     }
-                }
 
                 // LOAD LOCATIONS
                 String loc_value;
                 subTag = this.getSubTag(NBTTag, "locations");
-                for (Object base : subTag.d()) {
-                    if (base instanceof NBTBase) {
-                        NBTBase thisTag = (NBTBase) base;
-                        loc_value = this.loadValueAsString(NBTTag, thisTag.getName());
-                        if (loc_value != null)
-                            this.locationList.put(thisTag.getName(), loc_value);
+                if (subTag != null)
+                    for (Object base : subTag.d()) {
+                        if (base instanceof NBTBase) {
+                            NBTBase thisTag = (NBTBase) base;
+                            loc_value = this.loadValueAsString(NBTTag, thisTag.getName());
+                            if (loc_value != null)
+                                this.locationList.put(thisTag.getName(), loc_value);
+                        }
                     }
-                }
 
                 // LOAD BOOLEAN
                 boolean b_value;
                 subTag = this.getSubTag(NBTTag, "boolean");
-                for (Object base : subTag.d()) {
-                    if (base instanceof NBTBase) {
-                        NBTBase thisTag = (NBTBase) base;
-                        b_value = this.loadValueAsBoolean(NBTTag, thisTag.getName());
-                        this.booleanList.put(thisTag.getName(), b_value);
+                if (subTag != null)
+                    for (Object base : subTag.d()) {
+                        if (base instanceof NBTBase) {
+                            NBTBase thisTag = (NBTBase) base;
+                            b_value = this.loadValueAsBoolean(NBTTag, thisTag.getName());
+                            this.booleanList.put(thisTag.getName(), b_value);
+                        }
                     }
-                }
 
                 // LOAD BYTE
                 byte byte_value;
                 subTag = this.getSubTag(NBTTag, "byte");
-                for (Object base : subTag.d()) {
-                    if (base instanceof NBTBase) {
-                        NBTBase thisTag = (NBTBase) base;
-                        byte_value = this.loadValueAsByte(NBTTag, thisTag.getName());
-                        this.byteList.put(thisTag.getName(), byte_value);
+                if (subTag != null)
+                    for (Object base : subTag.d()) {
+                        if (base instanceof NBTBase) {
+                            NBTBase thisTag = (NBTBase) base;
+                            byte_value = this.loadValueAsByte(NBTTag, thisTag.getName());
+                            this.byteList.put(thisTag.getName(), byte_value);
+                        }
                     }
-                }
 
                 // LOAD INTEGER
                 int i_value;
                 subTag = this.getSubTag(NBTTag, "integer");
-                for (Object base : subTag.d()) {
-                    if (base instanceof NBTBase) {
-                        NBTBase thisTag = (NBTBase) base;
-                        i_value = this.loadValueAsInteger(NBTTag, thisTag.getName());
-                        this.integerList.put(thisTag.getName(), i_value);
+                if (subTag != null)
+                    for (Object base : subTag.d()) {
+                        if (base instanceof NBTBase) {
+                            NBTBase thisTag = (NBTBase) base;
+                            i_value = this.loadValueAsInteger(NBTTag, thisTag.getName());
+                            this.integerList.put(thisTag.getName(), i_value);
+                        }
                     }
-                }
 
                 // LOAD SHORT
                 short short_value;
                 subTag = this.getSubTag(NBTTag, "short");
-                for (Object base : subTag.d()) {
-                    if (base instanceof NBTBase) {
-                        NBTBase thisTag = (NBTBase) base;
-                        short_value = this.loadValueAsShort(NBTTag, thisTag.getName());
-                        this.shortList.put(thisTag.getName(), short_value);
+                if (subTag != null)
+                    for (Object base : subTag.d()) {
+                        if (base instanceof NBTBase) {
+                            NBTBase thisTag = (NBTBase) base;
+                            short_value = this.loadValueAsShort(NBTTag, thisTag.getName());
+                            this.shortList.put(thisTag.getName(), short_value);
+                        }
                     }
-                }
 
                 // LOAD DOUBLE
                 double d_value;
                 subTag = this.getSubTag(NBTTag, "double");
-                for (Object base : subTag.d()) {
-                    if (base instanceof NBTBase) {
-                        NBTBase thisTag = (NBTBase) base;
-                        d_value = this.loadValueAsDouble(NBTTag, thisTag.getName());
-                        this.doubleList.put(thisTag.getName(), d_value);
+                if (subTag != null)
+                    for (Object base : subTag.d()) {
+                        if (base instanceof NBTBase) {
+                            NBTBase thisTag = (NBTBase) base;
+                            d_value = this.loadValueAsDouble(NBTTag, thisTag.getName());
+                            this.doubleList.put(thisTag.getName(), d_value);
+                        }
                     }
-                }
 
                 // LOAD FLOAT
                 float f_value;
                 subTag = this.getSubTag(NBTTag, "float");
-                for (Object base : subTag.d()) {
-                    if (base instanceof NBTBase) {
-                        NBTBase thisTag = (NBTBase) base;
-                        f_value = this.loadValueAsFloat(NBTTag, thisTag.getName());
-                        this.floatList.put(thisTag.getName(), f_value);
+                if (subTag != null)
+                    for (Object base : subTag.d()) {
+                        if (base instanceof NBTBase) {
+                            NBTBase thisTag = (NBTBase) base;
+                            f_value = this.loadValueAsFloat(NBTTag, thisTag.getName());
+                            this.floatList.put(thisTag.getName(), f_value);
+                        }
                     }
-                }
 
                 // LOAD LONG
                 long long_value;
                 subTag = this.getSubTag(NBTTag, "long");
-                for (Object base : subTag.d()) {
-                    if (base instanceof NBTBase) {
-                        NBTBase thisTag = (NBTBase) base;
-                        long_value = this.loadValueAsLong(NBTTag, thisTag.getName());
-                        this.longList.put(thisTag.getName(), long_value);
+                if (subTag != null)
+                    for (Object base : subTag.d()) {
+                        if (base instanceof NBTBase) {
+                            NBTBase thisTag = (NBTBase) base;
+                            long_value = this.loadValueAsLong(NBTTag, thisTag.getName());
+                            this.longList.put(thisTag.getName(), long_value);
+                        }
                     }
-                }
 
                 // CLOSE STREAM
                 FIS.close();
