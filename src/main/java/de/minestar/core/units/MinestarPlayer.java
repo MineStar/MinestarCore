@@ -112,6 +112,10 @@ public class MinestarPlayer {
         this.valueList.put(key, value);
     }
 
+    public void setValue(String key, boolean value) {
+        this.setValue(key, String.valueOf(value));
+    }
+
     public void setValue(String key, int value) {
         this.setValue(key, String.valueOf(value));
     }
@@ -136,6 +140,10 @@ public class MinestarPlayer {
 
     public String getValueAsString(String key) {
         return this.valueList.get(key);
+    }
+
+    public boolean getValueAsBoolean(String key) {
+        return Boolean.valueOf(this.getValueAsString(key));
     }
 
     public int getValueAsInteger(String key) {
