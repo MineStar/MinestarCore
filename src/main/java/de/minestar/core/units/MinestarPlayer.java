@@ -3,8 +3,8 @@ package de.minestar.core.units;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import net.minecraft.server.NBTBase;
 import net.minecraft.server.NBTTagCompound;
@@ -25,7 +25,16 @@ public class MinestarPlayer {
     private final String playerName;
     private String group;
 
-    private HashMap<String, String> valueList = new HashMap<String, String>();
+    // LISTS
+    private ConcurrentHashMap<String, String> stringList = new ConcurrentHashMap<String, String>();
+    private ConcurrentHashMap<String, Boolean> booleanList = new ConcurrentHashMap<String, Boolean>();
+    private ConcurrentHashMap<String, Byte> byteList = new ConcurrentHashMap<String, Byte>();
+    private ConcurrentHashMap<String, Integer> integerList = new ConcurrentHashMap<String, Integer>();
+    private ConcurrentHashMap<String, Double> doubleList = new ConcurrentHashMap<String, Double>();
+    private ConcurrentHashMap<String, Float> floatList = new ConcurrentHashMap<String, Float>();
+    private ConcurrentHashMap<String, Long> longList = new ConcurrentHashMap<String, Long>();
+    private ConcurrentHashMap<String, Short> shortList = new ConcurrentHashMap<String, Short>();
+    private ConcurrentHashMap<String, String> locationList = new ConcurrentHashMap<String, String>();
 
     public MinestarPlayer(Player player) {
         this.playerName = player.getName();
@@ -120,39 +129,39 @@ public class MinestarPlayer {
     // ///////////////////////////////////////////////
 
     public void setString(String key, String value) {
-        this.valueList.put(key, value);
+        this.stringList.put(key, value);
     }
 
     public void setBoolean(String key, boolean value) {
-        this.setString(key, String.valueOf(value));
+        this.booleanList.put(key, value);
     }
 
-    public void setByte(String key, long value) {
-        this.setString(key, String.valueOf(value));
+    public void setByte(String key, byte value) {
+        this.byteList.put(key, value);
     }
 
     public void setInteger(String key, int value) {
-        this.setString(key, String.valueOf(value));
+        this.integerList.put(key, value);
     }
 
     public void setDouble(String key, double value) {
-        this.setString(key, String.valueOf(value));
+        this.doubleList.put(key, value);
     }
 
     public void setFloat(String key, float value) {
-        this.setString(key, String.valueOf(value));
+        this.floatList.put(key, value);
     }
 
     public void setLong(String key, long value) {
-        this.setString(key, String.valueOf(value));
+        this.longList.put(key, value);
     }
 
     public void setShort(String key, short value) {
-        this.setString(key, String.valueOf(value));
+        this.shortList.put(key, value);
     }
 
     public void setLocation(String key, Location location) {
-        this.setString(key, BlockUtils.LocationToString(location));
+        this.locationList.put(key, BlockUtils.LocationToString(location));
     }
 
     // ///////////////////////////////////////////////
@@ -162,39 +171,39 @@ public class MinestarPlayer {
     // ///////////////////////////////////////////////
 
     public String getString(String key) {
-        return this.valueList.get(key);
+        return this.stringList.get(key);
     }
 
     public boolean getBoolean(String key) {
-        return Boolean.valueOf(this.getString(key));
+        return this.booleanList.get(key);
     }
 
     public byte getByte(String key) {
-        return Byte.valueOf(this.getString(key));
+        return this.byteList.get(key);
     }
 
     public int getInteger(String key) {
-        return Integer.valueOf(this.getString(key));
+        return this.integerList.get(key);
     }
 
     public double getDouble(String key) {
-        return Double.valueOf(this.getString(key));
+        return this.doubleList.get(key);
     }
 
     public float getFloat(String key) {
-        return Float.valueOf(this.getString(key));
+        return this.floatList.get(key);
     }
 
     public long getLong(String key) {
-        return Long.valueOf(this.getString(key));
+        return this.longList.get(key);
     }
 
     public short getShort(String key) {
-        return Short.valueOf(this.getString(key));
+        return this.shortList.get(key);
     }
 
     public Location getLocation(String key) {
-        return BlockUtils.LocationFromString(this.getString(key));
+        return BlockUtils.LocationFromString(this.locationList.get(key));
     }
 
     /**
@@ -207,7 +216,49 @@ public class MinestarPlayer {
             File tmpFile = new File(Core.dataFolder, "\\playerdata\\tmp_" + this.playerName + ".dat");
             FileOutputStream fileoutputstream = new FileOutputStream(tmpFile);
             NBTTagCompound NBTTag = new NBTTagCompound();
-            for (Map.Entry<String, String> entry : this.valueList.entrySet()) {
+
+            // SAVE STRINGS
+            for (Map.Entry<String, String> entry : this.stringList.entrySet()) {
+                NBTTag.setString(entry.getKey(), entry.getValue());
+            }
+
+            // SAVE SHORT
+            for (Map.Entry<String, Short> entry : this.shortList.entrySet()) {
+                NBTTag.setShort(entry.getKey(), entry.getValue());
+            }
+
+            // SAVE INTEGER
+            for (Map.Entry<String, Integer> entry : this.integerList.entrySet()) {
+                NBTTag.setInt(entry.getKey(), entry.getValue());
+            }
+
+            // SAVE LONG
+            for (Map.Entry<String, Long> entry : this.longList.entrySet()) {
+                NBTTag.setLong(entry.getKey(), entry.getValue());
+            }
+
+            // SAVE DOUBLE
+            for (Map.Entry<String, Double> entry : this.doubleList.entrySet()) {
+                NBTTag.setDouble(entry.getKey(), entry.getValue());
+            }
+
+            // SAVE FLOAT
+            for (Map.Entry<String, Float> entry : this.floatList.entrySet()) {
+                NBTTag.setFloat(entry.getKey(), entry.getValue());
+            }
+
+            // SAVE BYTE
+            for (Map.Entry<String, Byte> entry : this.byteList.entrySet()) {
+                NBTTag.setByte(entry.getKey(), entry.getValue());
+            }
+
+            // SAVE BOOLEAN
+            for (Map.Entry<String, Boolean> entry : this.booleanList.entrySet()) {
+                NBTTag.setBoolean(entry.getKey(), entry.getValue());
+            }
+
+            // SAVE LOCATIONS
+            for (Map.Entry<String, String> entry : this.locationList.entrySet()) {
                 NBTTag.setString(entry.getKey(), entry.getValue());
             }
 
@@ -219,10 +270,27 @@ public class MinestarPlayer {
             if (file.exists()) {
                 file.delete();
             }
+
             // RENAME THE TMP FILE
             tmpFile.renameTo(file);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    /**
+     * This method is a helper method for reading single values out of the file
+     * 
+     * @param NBTTag
+     * @param key
+     * @return the value as a string
+     */
+    private NBTTagCompound getSubTag(NBTTagCompound NBTTag, String key) {
+        if (!NBTTag.hasKey(key)) {
+            ConsoleUtils.printError(Core.pluginName, "File is missing subtag '" + key + "'.");
+            return null;
+        } else {
+            return NBTTag.getCompound(key);
         }
     }
 
@@ -242,6 +310,69 @@ public class MinestarPlayer {
         }
     }
 
+    private byte loadValueAsByte(NBTTagCompound NBTTag, String key) {
+        if (!NBTTag.hasKey(key)) {
+            ConsoleUtils.printError(Core.pluginName, "File is missing value '" + key + "'.");
+            return 0;
+        } else {
+            return NBTTag.getByte(key);
+        }
+    }
+
+    private long loadValueAsLong(NBTTagCompound NBTTag, String key) {
+        if (!NBTTag.hasKey(key)) {
+            ConsoleUtils.printError(Core.pluginName, "File is missing value '" + key + "'.");
+            return 0;
+        } else {
+            return NBTTag.getLong(key);
+        }
+    }
+
+    private int loadValueAsInteger(NBTTagCompound NBTTag, String key) {
+        if (!NBTTag.hasKey(key)) {
+            ConsoleUtils.printError(Core.pluginName, "File is missing value '" + key + "'.");
+            return 0;
+        } else {
+            return NBTTag.getInt(key);
+        }
+    }
+
+    private float loadValueAsFloat(NBTTagCompound NBTTag, String key) {
+        if (!NBTTag.hasKey(key)) {
+            ConsoleUtils.printError(Core.pluginName, "File is missing value '" + key + "'.");
+            return 0;
+        } else {
+            return NBTTag.getFloat(key);
+        }
+    }
+
+    private double loadValueAsDouble(NBTTagCompound NBTTag, String key) {
+        if (!NBTTag.hasKey(key)) {
+            ConsoleUtils.printError(Core.pluginName, "File is missing value '" + key + "'.");
+            return 0;
+        } else {
+            return NBTTag.getDouble(key);
+        }
+    }
+
+    private short loadValueAsShort(NBTTagCompound NBTTag, String key) {
+        if (!NBTTag.hasKey(key)) {
+            ConsoleUtils.printError(Core.pluginName, "File is missing value '" + key + "'.");
+            return 0;
+        } else {
+            return NBTTag.getShort(key);
+        }
+    }
+
+    private boolean loadValueAsBoolean(NBTTagCompound NBTTag, String key) {
+        if (!NBTTag.hasKey(key)) {
+            ConsoleUtils.printError(Core.pluginName, "File is missing value '" + key + "'.");
+            return false;
+        } else {
+            return NBTTag.getBoolean(key);
+        }
+    }
+
     /**
      * This method will load all the playerdata from the file
      */
@@ -253,14 +384,104 @@ public class MinestarPlayer {
                 FileInputStream FIS = new FileInputStream(file);
                 NBTTagCompound NBTTag = CompressedStreamTools.loadGzippedCompoundFromOutputStream(FIS);
 
-                // LOAD DATA
-                String value;
-                for (Object base : NBTTag.d()) {
+                // LOAD STRINGS
+                String s_value;
+                NBTTagCompound subTag = this.getSubTag(NBTTag, "strings");
+                for (Object base : subTag.d()) {
                     if (base instanceof NBTBase) {
                         NBTBase thisTag = (NBTBase) base;
-                        value = this.loadValueAsString(NBTTag, thisTag.getName());
-                        if (value != null)
-                            this.valueList.put(thisTag.getName(), value);
+                        s_value = this.loadValueAsString(NBTTag, thisTag.getName());
+                        if (s_value != null)
+                            this.stringList.put(thisTag.getName(), s_value);
+                    }
+                }
+
+                // LOAD LOCATIONS
+                String loc_value;
+                subTag = this.getSubTag(NBTTag, "locations");
+                for (Object base : subTag.d()) {
+                    if (base instanceof NBTBase) {
+                        NBTBase thisTag = (NBTBase) base;
+                        loc_value = this.loadValueAsString(NBTTag, thisTag.getName());
+                        if (loc_value != null)
+                            this.locationList.put(thisTag.getName(), loc_value);
+                    }
+                }
+
+                // LOAD BOOLEAN
+                boolean b_value;
+                subTag = this.getSubTag(NBTTag, "boolean");
+                for (Object base : subTag.d()) {
+                    if (base instanceof NBTBase) {
+                        NBTBase thisTag = (NBTBase) base;
+                        b_value = this.loadValueAsBoolean(NBTTag, thisTag.getName());
+                        this.booleanList.put(thisTag.getName(), b_value);
+                    }
+                }
+
+                // LOAD BYTE
+                byte byte_value;
+                subTag = this.getSubTag(NBTTag, "byte");
+                for (Object base : subTag.d()) {
+                    if (base instanceof NBTBase) {
+                        NBTBase thisTag = (NBTBase) base;
+                        byte_value = this.loadValueAsByte(NBTTag, thisTag.getName());
+                        this.byteList.put(thisTag.getName(), byte_value);
+                    }
+                }
+
+                // LOAD INTEGER
+                int i_value;
+                subTag = this.getSubTag(NBTTag, "integer");
+                for (Object base : subTag.d()) {
+                    if (base instanceof NBTBase) {
+                        NBTBase thisTag = (NBTBase) base;
+                        i_value = this.loadValueAsInteger(NBTTag, thisTag.getName());
+                        this.integerList.put(thisTag.getName(), i_value);
+                    }
+                }
+
+                // LOAD SHORT
+                short short_value;
+                subTag = this.getSubTag(NBTTag, "short");
+                for (Object base : subTag.d()) {
+                    if (base instanceof NBTBase) {
+                        NBTBase thisTag = (NBTBase) base;
+                        short_value = this.loadValueAsShort(NBTTag, thisTag.getName());
+                        this.shortList.put(thisTag.getName(), short_value);
+                    }
+                }
+
+                // LOAD DOUBLE
+                double d_value;
+                subTag = this.getSubTag(NBTTag, "double");
+                for (Object base : subTag.d()) {
+                    if (base instanceof NBTBase) {
+                        NBTBase thisTag = (NBTBase) base;
+                        d_value = this.loadValueAsDouble(NBTTag, thisTag.getName());
+                        this.doubleList.put(thisTag.getName(), d_value);
+                    }
+                }
+
+                // LOAD FLOAT
+                float f_value;
+                subTag = this.getSubTag(NBTTag, "float");
+                for (Object base : subTag.d()) {
+                    if (base instanceof NBTBase) {
+                        NBTBase thisTag = (NBTBase) base;
+                        f_value = this.loadValueAsFloat(NBTTag, thisTag.getName());
+                        this.floatList.put(thisTag.getName(), f_value);
+                    }
+                }
+
+                // LOAD LONG
+                long long_value;
+                subTag = this.getSubTag(NBTTag, "long");
+                for (Object base : subTag.d()) {
+                    if (base instanceof NBTBase) {
+                        NBTBase thisTag = (NBTBase) base;
+                        long_value = this.loadValueAsLong(NBTTag, thisTag.getName());
+                        this.longList.put(thisTag.getName(), long_value);
                     }
                 }
 
