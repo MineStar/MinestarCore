@@ -11,7 +11,7 @@ import de.minestar.core.manager.PlayerManager;
 import de.minestar.core.units.MinestarPlayer;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
-public class Core extends JavaPlugin {
+public class MinestarCore extends JavaPlugin {
 
     public static String pluginName = "MinestarCore";
     public static File dataFolder;

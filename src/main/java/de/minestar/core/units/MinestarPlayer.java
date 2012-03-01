@@ -15,7 +15,7 @@ import org.bukkit.entity.Player;
 import com.bukkit.gemo.utils.BlockUtils;
 import com.bukkit.gemo.utils.UtilPermissions;
 
-import de.minestar.core.Core;
+import de.minestar.core.MinestarCore;
 import de.minestar.core.exceptions.BukkitPlayerOfflineException;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
@@ -96,7 +96,7 @@ public class MinestarPlayer {
     }
 
     public void setListName(String listName) {
-        this.setString("nickName", listName);
+        this.setString("listName", listName);
         this.updateBukkitPlayer();
     }
 
@@ -210,10 +210,10 @@ public class MinestarPlayer {
      * This method will save the playerfile
      */
     public void saveData() {
-        File file = new File(Core.dataFolder, "\\playerdata\\" + this.playerName + ".dat");
+        File file = new File(MinestarCore.dataFolder, "\\playerdata\\" + this.playerName + ".dat");
         try {
             // CREAT TEMP-FILE
-            File tmpFile = new File(Core.dataFolder, "\\playerdata\\tmp_" + this.playerName + ".dat");
+            File tmpFile = new File(MinestarCore.dataFolder, "\\playerdata\\tmp_" + this.playerName + ".dat");
             FileOutputStream fileoutputstream = new FileOutputStream(tmpFile);
 
             NBTTagCompound NBTTag = new NBTTagCompound();
@@ -296,6 +296,7 @@ public class MinestarPlayer {
             e.printStackTrace();
         }
     }
+
     /**
      * This method is a helper method for reading single values out of the file
      * 
@@ -305,7 +306,7 @@ public class MinestarPlayer {
      */
     private NBTTagCompound getSubTag(NBTTagCompound NBTTag, String key) {
         if (!NBTTag.hasKey(key)) {
-            ConsoleUtils.printError(Core.pluginName, "File is missing subtag '" + key + "'.");
+            ConsoleUtils.printError(MinestarCore.pluginName, "File is missing subtag '" + key + "'.");
             return null;
         } else {
             return NBTTag.getCompound(key);
@@ -321,7 +322,7 @@ public class MinestarPlayer {
      */
     private String loadValueAsString(NBTTagCompound NBTTag, String key) {
         if (!NBTTag.hasKey(key)) {
-            ConsoleUtils.printError(Core.pluginName, "File is missing value '" + key + "'.");
+            ConsoleUtils.printError(MinestarCore.pluginName, "File is missing value '" + key + "'.");
             return null;
         } else {
             return NBTTag.getString(key);
@@ -330,7 +331,7 @@ public class MinestarPlayer {
 
     private byte loadValueAsByte(NBTTagCompound NBTTag, String key) {
         if (!NBTTag.hasKey(key)) {
-            ConsoleUtils.printError(Core.pluginName, "File is missing value '" + key + "'.");
+            ConsoleUtils.printError(MinestarCore.pluginName, "File is missing value '" + key + "'.");
             return 0;
         } else {
             return NBTTag.getByte(key);
@@ -339,7 +340,7 @@ public class MinestarPlayer {
 
     private long loadValueAsLong(NBTTagCompound NBTTag, String key) {
         if (!NBTTag.hasKey(key)) {
-            ConsoleUtils.printError(Core.pluginName, "File is missing value '" + key + "'.");
+            ConsoleUtils.printError(MinestarCore.pluginName, "File is missing value '" + key + "'.");
             return 0;
         } else {
             return NBTTag.getLong(key);
@@ -348,7 +349,7 @@ public class MinestarPlayer {
 
     private int loadValueAsInteger(NBTTagCompound NBTTag, String key) {
         if (!NBTTag.hasKey(key)) {
-            ConsoleUtils.printError(Core.pluginName, "File is missing value '" + key + "'.");
+            ConsoleUtils.printError(MinestarCore.pluginName, "File is missing value '" + key + "'.");
             return 0;
         } else {
             return NBTTag.getInt(key);
@@ -357,7 +358,7 @@ public class MinestarPlayer {
 
     private float loadValueAsFloat(NBTTagCompound NBTTag, String key) {
         if (!NBTTag.hasKey(key)) {
-            ConsoleUtils.printError(Core.pluginName, "File is missing value '" + key + "'.");
+            ConsoleUtils.printError(MinestarCore.pluginName, "File is missing value '" + key + "'.");
             return 0;
         } else {
             return NBTTag.getFloat(key);
@@ -366,7 +367,7 @@ public class MinestarPlayer {
 
     private double loadValueAsDouble(NBTTagCompound NBTTag, String key) {
         if (!NBTTag.hasKey(key)) {
-            ConsoleUtils.printError(Core.pluginName, "File is missing value '" + key + "'.");
+            ConsoleUtils.printError(MinestarCore.pluginName, "File is missing value '" + key + "'.");
             return 0;
         } else {
             return NBTTag.getDouble(key);
@@ -375,7 +376,7 @@ public class MinestarPlayer {
 
     private short loadValueAsShort(NBTTagCompound NBTTag, String key) {
         if (!NBTTag.hasKey(key)) {
-            ConsoleUtils.printError(Core.pluginName, "File is missing value '" + key + "'.");
+            ConsoleUtils.printError(MinestarCore.pluginName, "File is missing value '" + key + "'.");
             return 0;
         } else {
             return NBTTag.getShort(key);
@@ -384,7 +385,7 @@ public class MinestarPlayer {
 
     private boolean loadValueAsBoolean(NBTTagCompound NBTTag, String key) {
         if (!NBTTag.hasKey(key)) {
-            ConsoleUtils.printError(Core.pluginName, "File is missing value '" + key + "'.");
+            ConsoleUtils.printError(MinestarCore.pluginName, "File is missing value '" + key + "'.");
             return false;
         } else {
             return NBTTag.getBoolean(key);
@@ -395,7 +396,7 @@ public class MinestarPlayer {
      * This method will load all the playerdata from the file
      */
     private void loadData() {
-        File file = new File(Core.dataFolder, "\\playerdata\\" + this.playerName + ".dat");
+        File file = new File(MinestarCore.dataFolder, "\\playerdata\\" + this.playerName + ".dat");
         if (file != null && file.exists()) {
             try {
                 // OPEN STREAM
@@ -409,9 +410,10 @@ public class MinestarPlayer {
                     for (Object base : subTag.d()) {
                         if (base instanceof NBTBase) {
                             NBTBase thisTag = (NBTBase) base;
-                            s_value = this.loadValueAsString(NBTTag, thisTag.getName());
+                            s_value = this.loadValueAsString(subTag, thisTag.getName());
                             if (s_value != null)
                                 this.stringList.put(thisTag.getName(), s_value);
+                            System.out.println(thisTag.getName() + " = " + this.stringList.get(thisTag.getName()));
                         }
                     }
 
@@ -422,7 +424,7 @@ public class MinestarPlayer {
                     for (Object base : subTag.d()) {
                         if (base instanceof NBTBase) {
                             NBTBase thisTag = (NBTBase) base;
-                            loc_value = this.loadValueAsString(NBTTag, thisTag.getName());
+                            loc_value = this.loadValueAsString(subTag, thisTag.getName());
                             if (loc_value != null)
                                 this.locationList.put(thisTag.getName(), loc_value);
                         }
@@ -435,7 +437,7 @@ public class MinestarPlayer {
                     for (Object base : subTag.d()) {
                         if (base instanceof NBTBase) {
                             NBTBase thisTag = (NBTBase) base;
-                            b_value = this.loadValueAsBoolean(NBTTag, thisTag.getName());
+                            b_value = this.loadValueAsBoolean(subTag, thisTag.getName());
                             this.booleanList.put(thisTag.getName(), b_value);
                         }
                     }
@@ -447,7 +449,7 @@ public class MinestarPlayer {
                     for (Object base : subTag.d()) {
                         if (base instanceof NBTBase) {
                             NBTBase thisTag = (NBTBase) base;
-                            byte_value = this.loadValueAsByte(NBTTag, thisTag.getName());
+                            byte_value = this.loadValueAsByte(subTag, thisTag.getName());
                             this.byteList.put(thisTag.getName(), byte_value);
                         }
                     }
@@ -459,7 +461,7 @@ public class MinestarPlayer {
                     for (Object base : subTag.d()) {
                         if (base instanceof NBTBase) {
                             NBTBase thisTag = (NBTBase) base;
-                            i_value = this.loadValueAsInteger(NBTTag, thisTag.getName());
+                            i_value = this.loadValueAsInteger(subTag, thisTag.getName());
                             this.integerList.put(thisTag.getName(), i_value);
                         }
                     }
@@ -471,7 +473,7 @@ public class MinestarPlayer {
                     for (Object base : subTag.d()) {
                         if (base instanceof NBTBase) {
                             NBTBase thisTag = (NBTBase) base;
-                            short_value = this.loadValueAsShort(NBTTag, thisTag.getName());
+                            short_value = this.loadValueAsShort(subTag, thisTag.getName());
                             this.shortList.put(thisTag.getName(), short_value);
                         }
                     }
@@ -483,7 +485,7 @@ public class MinestarPlayer {
                     for (Object base : subTag.d()) {
                         if (base instanceof NBTBase) {
                             NBTBase thisTag = (NBTBase) base;
-                            d_value = this.loadValueAsDouble(NBTTag, thisTag.getName());
+                            d_value = this.loadValueAsDouble(subTag, thisTag.getName());
                             this.doubleList.put(thisTag.getName(), d_value);
                         }
                     }
@@ -495,7 +497,7 @@ public class MinestarPlayer {
                     for (Object base : subTag.d()) {
                         if (base instanceof NBTBase) {
                             NBTBase thisTag = (NBTBase) base;
-                            f_value = this.loadValueAsFloat(NBTTag, thisTag.getName());
+                            f_value = this.loadValueAsFloat(subTag, thisTag.getName());
                             this.floatList.put(thisTag.getName(), f_value);
                         }
                     }
@@ -507,7 +509,7 @@ public class MinestarPlayer {
                     for (Object base : subTag.d()) {
                         if (base instanceof NBTBase) {
                             NBTBase thisTag = (NBTBase) base;
-                            long_value = this.loadValueAsLong(NBTTag, thisTag.getName());
+                            long_value = this.loadValueAsLong(subTag, thisTag.getName());
                             this.longList.put(thisTag.getName(), long_value);
                         }
                     }
@@ -519,7 +521,6 @@ public class MinestarPlayer {
             }
         }
     }
-
     /**
      * Update the bukkitplayer
      */
