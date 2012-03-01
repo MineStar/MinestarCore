@@ -67,9 +67,6 @@ public class MinestarPlayer {
 
         // LOAD DATA
         this.loadData();
-
-        // UPDATE THE BUKKITPLAYER
-        this.updateBukkitPlayer();
     }
 
     public String getPlayerName() {
