@@ -3,10 +3,12 @@ package de.minestar.core;
 import java.io.File;
 
 import org.bukkit.Bukkit;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.minestar.core.listener.ConnectionListener;
 import de.minestar.core.manager.PlayerManager;
+import de.minestar.core.units.MinestarPlayer;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
 public class Core extends JavaPlugin {
@@ -17,7 +19,7 @@ public class Core extends JavaPlugin {
     /**
      * Manager
      */
-    private PlayerManager playerManager;
+    private static PlayerManager playerManager;
 
     /**
      * Listener
@@ -27,7 +29,7 @@ public class Core extends JavaPlugin {
     @Override
     public void onDisable() {
         // SAVE PLAYERS
-        this.playerManager.savePlayers();
+        playerManager.savePlayers();
 
         // PRINT INFO
         ConsoleUtils.printInfo(pluginName, "Disabled v" + this.getDescription().getVersion() + "!");
@@ -53,14 +55,18 @@ public class Core extends JavaPlugin {
     }
 
     private void createManager() {
-        this.playerManager = new PlayerManager();
+        playerManager = new PlayerManager();
     }
 
     private void createListener() {
-        this.connectionListener = new ConnectionListener(this.playerManager);
+        this.connectionListener = new ConnectionListener(playerManager);
     }
 
     private void registerEvents() {
         Bukkit.getPluginManager().registerEvents(this.connectionListener, this);
+    }
+
+    public static MinestarPlayer getPlayer(Player player) {
+        return playerManager.getPlayer(player);
     }
 }
