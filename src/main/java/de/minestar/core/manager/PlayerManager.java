@@ -53,6 +53,7 @@ public class PlayerManager {
         }
         thisPlayer.setOnline();
         this.onlinePlayerList.put(player.getName(), thisPlayer);
+        thisPlayer.updateBukkitPlayer();
         return thisPlayer;
     }
 

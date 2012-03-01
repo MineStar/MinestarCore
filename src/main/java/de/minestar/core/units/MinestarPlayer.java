@@ -45,7 +45,7 @@ public class MinestarPlayer {
     }
 
     public boolean isOffline() {
-        return !this.online;
+        return !this.isOnline();
     }
 
     public void update() {
@@ -237,7 +237,10 @@ public class MinestarPlayer {
         }
     }
 
-    private void updateBukkitPlayer() {
+    /**
+     * Update the bukkitplayer
+     */
+    public void updateBukkitPlayer() {
         // ONLY UPDATE, IF ONLINE
         if (this.isOffline())
             return;
