@@ -2,7 +2,6 @@ package de.minestar.core.units;
 
 import java.io.File;
 
-import org.anjocaido.groupmanager.GroupManager;
 import org.anjocaido.groupmanager.data.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -98,7 +97,7 @@ public class MinestarPlayer {
             this.group = "default";
             // GET GROUP FROM GROUPMANAGER
             if (MinestarCore.groupManager != null) {
-                User user = GroupManager.getWorldsHolder().getWorldData("world").getUser(playerName);
+                User user = MinestarCore.groupManager.getWorldsHolder().getWorldData("world").getUser(playerName);
                 this.group = user.getGroupName();
             }
         }
