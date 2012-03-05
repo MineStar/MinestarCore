@@ -80,7 +80,11 @@ public class MinestarCore extends JavaPlugin {
         Bukkit.getPluginManager().registerEvents(this.connectionListener, this);
     }
 
+    public static MinestarPlayer getPlayer(String playerName) {
+        return playerManager.getPlayer(playerName);
+    }
+
     public static MinestarPlayer getPlayer(Player player) {
-        return playerManager.getPlayer(player);
+        return MinestarCore.getPlayer(player.getName());
     }
 }
