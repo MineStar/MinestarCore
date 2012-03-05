@@ -56,8 +56,8 @@ public class MinestarPlayer {
         this.data = new Data(new File(MinestarCore.dataFolder, "playerdata"), playerName, DataType.NBT);
 
         // INITIALIZE NICKNAME & LISTNAME
-        this.data.setString("nickName", this.playerName);
-        this.data.setString("listName", this.playerName);
+        this.data.setString("general.nickName", this.playerName);
+        this.data.setString("general.listName", this.playerName);
 
         // LOAD DATA
         this.data.load();
@@ -68,20 +68,20 @@ public class MinestarPlayer {
     }
 
     public String getNickName() {
-        return this.data.getString("nickName");
+        return this.data.getString("general.nickName");
     }
 
     public void setNickName(String nickName) {
-        this.data.setString("nickName", nickName);
+        this.data.setString("general.nickName", nickName);
         this.updateBukkitPlayer();
     }
 
     public String getListName() {
-        return this.data.getString("listName");
+        return this.data.getString("general.listName");
     }
 
     public void setListName(String listName) {
-        this.data.setString("listName", listName);
+        this.data.setString("general.listName", listName);
         this.updateBukkitPlayer();
     }
 
