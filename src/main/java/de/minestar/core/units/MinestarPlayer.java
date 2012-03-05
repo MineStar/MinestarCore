@@ -2,6 +2,9 @@ package de.minestar.core.units;
 
 import java.io.File;
 
+import org.anjocaido.groupmanager.GroupManager;
+import org.anjocaido.groupmanager.data.User;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
 import com.bukkit.gemo.utils.UtilPermissions;
@@ -18,9 +21,17 @@ public class MinestarPlayer {
     private String group;
     private Data data;
 
-    public MinestarPlayer(Player player) {
-        this.playerName = player.getName();
+    public MinestarPlayer(String playerName) {
+        this.playerName = playerName;
+        if (Bukkit.getPlayer(playerName) != null)
+            this.setOnline();
+        else
+            this.setOffline();
         this.load();
+    }
+
+    public MinestarPlayer(Player player) {
+        this(player.getName());
         this.updateBukkitPlayer();
     }
 
@@ -41,25 +52,17 @@ public class MinestarPlayer {
     }
 
     public void load() {
-        // ONLY UPDATE, IF ONLINE
-        if (this.isOffline())
-            return;
-
-        // GET THE PLAYER
-        Player player = PlayerUtils.getOnlinePlayer(this.playerName);
-        if (player == null)
-            throw new BukkitPlayerOfflineException(this.playerName);
-
         // UPDATE THE PLAYER
         this.updateGroup();
 
+        // INIT DATA
         this.data = new Data(new File(MinestarCore.dataFolder, "playerdata"), playerName, DataType.NBT);
 
         // INITIALIZE NICKNAME & LISTNAME
         this.data.setString("general.nickName", this.playerName);
         this.data.setString("general.listName", this.playerName);
 
-        // LOAD DATA
+        // LOAD DATA FROM FILE
         this.data.load();
     }
 
@@ -92,10 +95,18 @@ public class MinestarPlayer {
 
         // GET THE PLAYER
         Player player = PlayerUtils.getOnlinePlayer(this.playerName);
-        if (player == null)
-            throw new BukkitPlayerOfflineException(this.playerName);
+        if (player != null) {
+            // GET GROUP WITH UTILPERMISSIONS
+            this.group = UtilPermissions.getGroupName(player);
+        } else {
+            this.group = "default";
+            // GET GROUP FROM GROUPMANAGER
+            if (MinestarCore.groupManager != null) {
+                User user = GroupManager.getWorldsHolder().getWorldData("world").getUser(playerName);
+                this.group = user.getGroupName();
+            }
+        }
 
-        this.group = UtilPermissions.getGroupName(player);
         return getGroup();
     }
 

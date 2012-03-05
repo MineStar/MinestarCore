@@ -2,8 +2,10 @@ package de.minestar.core;
 
 import java.io.File;
 
+import org.anjocaido.groupmanager.GroupManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import de.minestar.core.listener.ConnectionListener;
@@ -15,6 +17,7 @@ public class MinestarCore extends JavaPlugin {
 
     public static String pluginName = "MinestarCore";
     public static File dataFolder;
+    public static GroupManager groupManager = null;
 
     /**
      * Manager
@@ -40,6 +43,9 @@ public class MinestarCore extends JavaPlugin {
         dataFolder = this.getDataFolder();
         dataFolder.mkdirs();
 
+        // GET GROUPMANAGER
+        this.getGroupManager();
+
         File playerFolder = new File(dataFolder, "\\playerdata");
         playerFolder.mkdir();
 
@@ -52,6 +58,14 @@ public class MinestarCore extends JavaPlugin {
 
         // PRINT INFO
         ConsoleUtils.printInfo(pluginName, "Enabled v" + this.getDescription().getVersion() + "!");
+    }
+
+    private void getGroupManager() {
+        Plugin gm = Bukkit.getServer().getPluginManager().getPlugin("GroupManager");
+        if (gm != null && gm.isEnabled())
+            MinestarCore.groupManager = (GroupManager) gm;
+        else
+            ConsoleUtils.printError(MinestarCore.pluginName, "Can't find GroupManager was not found!");
     }
 
     private void createManager() {
