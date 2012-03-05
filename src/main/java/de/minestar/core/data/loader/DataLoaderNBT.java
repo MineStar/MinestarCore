@@ -44,6 +44,7 @@ public class DataLoaderNBT implements IDataLoader {
                     this.data.getDataInt().load(rootTag);
                     this.data.getDataLong().load(rootTag);
                     this.data.getDataShort().load(rootTag);
+                    this.data.getDataString().load(rootTag);
                     this.data.getDataLocation().load(rootTag);
                 }
 

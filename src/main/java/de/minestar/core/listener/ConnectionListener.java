@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 
 import de.minestar.core.manager.PlayerManager;
 import de.minestar.core.units.MinestarPlayer;
@@ -49,6 +50,11 @@ public class ConnectionListener implements Listener {
 
     private void onPlayerDisconnect(Player player) {
         this.playerManager.removePlayer(player);
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPlayerRespawn(PlayerRespawnEvent event) {
+        this.playerManager.getPlayer(event.getPlayer()).updateBukkitPlayer();
     }
 
 }

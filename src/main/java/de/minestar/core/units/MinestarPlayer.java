@@ -58,12 +58,13 @@ public class MinestarPlayer {
         // INIT DATA
         this.data = new Data(new File(MinestarCore.dataFolder, "playerdata"), playerName, DataType.NBT);
 
-        // INITIALIZE NICKNAME & LISTNAME
-        this.data.setString("general.nickName", this.playerName);
-        this.data.setString("general.listName", this.playerName);
-
         // LOAD DATA FROM FILE
         this.data.load();
+
+        if (this.data.getString("general.nickName") == null)
+            this.data.setString("general.nickName", this.playerName);
+        if (this.data.getString("general.listName") == null)
+            this.data.setString("general.listName", this.playerName);
     }
 
     public String getPlayerName() {

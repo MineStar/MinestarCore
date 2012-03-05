@@ -7,6 +7,7 @@ import org.bukkit.Location;
 
 import com.bukkit.gemo.utils.BlockUtils;
 
+import net.minecraft.server.NBTBase;
 import net.minecraft.server.NBTTagCompound;
 
 public class ValueLocation implements IValue {
@@ -26,12 +27,13 @@ public class ValueLocation implements IValue {
 
     @Override
     public void load(NBTTagCompound NBTTag) {
+        valueList = new ConcurrentHashMap<String, String>();
         if (NBTTag.hasKey(name)) {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
             for (Object base : thisCompound.d()) {
-                if (base instanceof NBTTagCompound) {
-                    NBTTagCompound thisTag = (NBTTagCompound) base;
-                    this.valueList.put(thisTag.getName(), thisTag.getString(thisTag.getName()));
+                if (base instanceof NBTBase) {
+                    NBTBase thisTag = (NBTBase) base;
+                    this.valueList.put(thisTag.getName(), thisCompound.getString(thisTag.getName()));
                 }
             }
         }

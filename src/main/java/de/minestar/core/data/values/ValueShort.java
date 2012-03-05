@@ -3,6 +3,7 @@ package de.minestar.core.data.values;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import net.minecraft.server.NBTBase;
 import net.minecraft.server.NBTTagCompound;
 
 public class ValueShort implements IValue {
@@ -22,12 +23,13 @@ public class ValueShort implements IValue {
 
     @Override
     public void load(NBTTagCompound NBTTag) {
+        valueList = new ConcurrentHashMap<String, Short>();
         if (NBTTag.hasKey(name)) {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
             for (Object base : thisCompound.d()) {
-                if (base instanceof NBTTagCompound) {
-                    NBTTagCompound thisTag = (NBTTagCompound) base;
-                    this.valueList.put(thisTag.getName(), thisTag.getShort(thisTag.getName()));
+                if (base instanceof NBTBase) {
+                    NBTBase thisTag = (NBTBase) base;
+                    this.valueList.put(thisTag.getName(), thisCompound.getShort(thisTag.getName()));
                 }
             }
         }
