@@ -15,7 +15,7 @@ import de.minestar.core.exceptions.BukkitPlayerOfflineException;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class MinestarPlayer {
-    private boolean online = true;
+    private boolean online = false;
     private final String playerName;
     private String group;
     private Data data;
@@ -31,6 +31,7 @@ public class MinestarPlayer {
 
     public MinestarPlayer(Player player) {
         this(player.getName());
+        this.setOnline();
         this.updateBukkitPlayer();
     }
 
@@ -121,7 +122,7 @@ public class MinestarPlayer {
             return;
 
         // GET THE PLAYER
-        Player player = PlayerUtils.getOnlinePlayer(this.playerName);
+        Player player = Bukkit.getPlayer(this.playerName);
         if (player == null)
             throw new BukkitPlayerOfflineException(this.playerName);
 

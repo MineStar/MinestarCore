@@ -10,6 +10,7 @@ import org.bukkit.event.player.PlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 
 import de.minestar.core.manager.PlayerManager;
+import de.minestar.core.units.MinestarPlayer;
 
 public class ConnectionListener implements Listener {
 
@@ -21,7 +22,10 @@ public class ConnectionListener implements Listener {
 
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
-        this.playerManager.getPlayer(event.getPlayer());
+        MinestarPlayer thisPlayer = this.playerManager.getPlayer(event.getPlayer());
+        thisPlayer.setOnline();
+        thisPlayer.updateGroup();
+        thisPlayer.updateBukkitPlayer();
     }
 
     @EventHandler(priority = EventPriority.LOWEST)

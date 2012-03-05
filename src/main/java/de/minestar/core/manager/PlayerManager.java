@@ -51,9 +51,6 @@ public class PlayerManager {
         } else {
             this.offlinePlayerList.remove(playerName);
         }
-        thisPlayer.setOnline();
-        thisPlayer.updateGroup();
-        thisPlayer.updateBukkitPlayer();
         this.onlinePlayerList.put(playerName, thisPlayer);
         return thisPlayer;
     }
