@@ -131,6 +131,24 @@ public class MinestarPlayer {
         player.setPlayerListName(this.getListName());
     }
 
+    /**
+     * Get the BukkitPlayer
+     * 
+     * @return the Bukkit-Player
+     */
+    public Player getBukkitPlayer() {
+        // PLAYER MUST BE ONLINE
+        if (this.isOffline())
+            return null;
+
+        // GET THE PLAYER
+        Player player = Bukkit.getPlayer(this.playerName);
+        if (player == null)
+            throw new BukkitPlayerOfflineException(this.playerName);
+
+        return player;
+    }
+
     public void saveData() {
         this.data.save();
     }
