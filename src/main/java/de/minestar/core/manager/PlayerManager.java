@@ -26,7 +26,7 @@ public class PlayerManager {
         onlinePlayerList = new ConcurrentHashMap<String, MinestarPlayer>();
         Player[] players = Bukkit.getOnlinePlayers();
         for (Player player : players) {
-            this.addPlayer(player);
+            this.getPlayer(player);
         }
     }
 
@@ -44,17 +44,17 @@ public class PlayerManager {
     //
     // /////////////////////////////////////////////
 
-    public MinestarPlayer addPlayer(Player player) {
-        MinestarPlayer thisPlayer = this.offlinePlayerList.get(player.getName());
+    private MinestarPlayer addPlayer(String playerName) {
+        MinestarPlayer thisPlayer = this.offlinePlayerList.get(playerName);
         if (thisPlayer == null) {
-            thisPlayer = new MinestarPlayer(player);
+            thisPlayer = new MinestarPlayer(playerName);
         } else {
-            this.offlinePlayerList.remove(player.getName());
+            this.offlinePlayerList.remove(playerName);
         }
         thisPlayer.setOnline();
         thisPlayer.updateGroup();
         thisPlayer.updateBukkitPlayer();
-        this.onlinePlayerList.put(player.getName(), thisPlayer);
+        this.onlinePlayerList.put(playerName, thisPlayer);
         return thisPlayer;
     }
 
@@ -84,7 +84,11 @@ public class PlayerManager {
     // /////////////////////////////////////////////
 
     public MinestarPlayer getPlayer(Player player) {
-        MinestarPlayer thisPlayer = this.onlinePlayerList.get(player.getName());
-        return (thisPlayer != null ? thisPlayer : this.addPlayer(player));
+        return this.getPlayer(player.getName());
+    }
+
+    public MinestarPlayer getPlayer(String playerName) {
+        MinestarPlayer thisPlayer = this.onlinePlayerList.get(playerName);
+        return (thisPlayer != null ? thisPlayer : this.addPlayer(playerName));
     }
 }
