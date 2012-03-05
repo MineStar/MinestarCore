@@ -89,10 +89,6 @@ public class MinestarPlayer {
     }
 
     public String updateGroup() {
-        // ONLY UPDATE, IF ONLINE
-        if (this.isOffline())
-            return "default";
-
         // GET THE PLAYER
         Player player = PlayerUtils.getOnlinePlayer(this.playerName);
         if (player != null) {
@@ -106,7 +102,6 @@ public class MinestarPlayer {
                 this.group = user.getGroupName();
             }
         }
-
         return getGroup();
     }
 
