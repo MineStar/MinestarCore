@@ -5,14 +5,15 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import net.minecraft.server.NBTBase;
 import net.minecraft.server.NBTTagCompound;
+import de.minestar.core.data.Returnable;
 
-public class ValueByte implements IValue {
+public class ValueByte extends Returnable implements IValue {
 
     private static final String name = "BYTE";
     private ConcurrentHashMap<String, Byte> valueList = new ConcurrentHashMap<String, Byte>();
 
     @Override
-    public Object getValue(String name) {
+    public byte getByte(String name) {
         return this.valueList.get(name);
     }
 

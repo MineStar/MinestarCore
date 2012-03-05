@@ -7,16 +7,18 @@ import org.bukkit.Location;
 
 import com.bukkit.gemo.utils.BlockUtils;
 
+import de.minestar.core.data.Returnable;
+
 import net.minecraft.server.NBTBase;
 import net.minecraft.server.NBTTagCompound;
 
-public class ValueLocation implements IValue {
+public class ValueLocation extends Returnable implements IValue {
 
     private static final String name = "LOCATION";
     private ConcurrentHashMap<String, String> valueList = new ConcurrentHashMap<String, String>();
 
     @Override
-    public Object getValue(String name) {
+    public Location getLocation(String name) {
         return BlockUtils.LocationFromString(this.valueList.get(name));
     }
 

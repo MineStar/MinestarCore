@@ -3,16 +3,18 @@ package de.minestar.core.data.values;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+import de.minestar.core.data.Returnable;
+
 import net.minecraft.server.NBTBase;
 import net.minecraft.server.NBTTagCompound;
 
-public class ValueLong implements IValue {
+public class ValueLong extends Returnable implements IValue {
 
     private static final String name = "LONG";
     private ConcurrentHashMap<String, Long> valueList = new ConcurrentHashMap<String, Long>();
 
     @Override
-    public Object getValue(String name) {
+    public long getLong(String name) {
         return this.valueList.get(name);
     }
 

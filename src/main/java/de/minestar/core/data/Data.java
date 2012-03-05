@@ -135,43 +135,43 @@ public class Data {
     // ///////////////////////////////////////////////
 
     public boolean getBoolean(String key) {
-        return (Boolean) this.dataBool.getValue(key);
+        return this.dataBool.getBoolean(key);
     }
 
     public byte getByte(String key) {
-        return (Byte) this.dataByte.getValue(key);
+        return this.dataByte.getByte(key);
     }
 
     public byte[] getByteArray(String key) {
-        return (byte[]) this.dataByteArray.getValue(key);
+        return this.dataByte.getByteArray(key);
     }
 
     public double getDouble(String key) {
-        return (Double) this.dataDouble.getValue(key);
+        return this.dataDouble.getDouble(key);
     }
 
     public float getFloat(String key) {
-        return (Float) this.dataFloat.getValue(key);
+        return this.dataFloat.getFloat(key);
     }
 
     public int getInteger(String key) {
-        return (Integer) this.dataInt.getValue(key);
+        return this.dataInt.getInteger(key);
     }
 
     public long getLong(String key) {
-        return (Long) this.dataLong.getValue(key);
+        return this.dataLong.getLong(key);
     }
 
     public short getShort(String key) {
-        return (Short) this.dataShort.getValue(key);
+        return this.dataShort.getShort(key);
     }
 
     public String getString(String key) {
-        return (String) this.dataString.getValue(key);
+        return this.dataString.getString(key);
     }
 
     public Location getLocation(String key) {
-        return (Location) this.dataLocation.getValue(key);
+        return this.dataLocation.getLocation(key);
     }
 
     /**
