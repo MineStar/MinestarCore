@@ -20,7 +20,8 @@ public class MinestarPlayer {
 
     public MinestarPlayer(Player player) {
         this.playerName = player.getName();
-        this.update(true);
+        this.load();
+        this.updateBukkitPlayer();
     }
 
     public void setOnline() {
@@ -39,7 +40,7 @@ public class MinestarPlayer {
         return !this.isOnline();
     }
 
-    private void initialize() {
+    public void load() {
         // ONLY UPDATE, IF ONLINE
         if (this.isOffline())
             return;
@@ -53,14 +54,6 @@ public class MinestarPlayer {
         this.updateGroup();
 
         this.data = new Data(new File(MinestarCore.dataFolder, "playerdata"), playerName, DataType.NBT);
-    }
-
-    public void update(boolean forceUpdate) {
-        // FORCE UPDATE = RELOAD FILE
-        if (forceUpdate) {
-            this.saveData();
-            this.initialize();
-        }
 
         // INITIALIZE NICKNAME & LISTNAME
         this.data.setString("nickName", this.playerName);
@@ -68,7 +61,6 @@ public class MinestarPlayer {
 
         // LOAD DATA
         this.data.load();
-        this.updateBukkitPlayer();
     }
 
     public String getPlayerName() {
