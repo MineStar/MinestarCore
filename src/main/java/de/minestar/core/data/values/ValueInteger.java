@@ -24,7 +24,7 @@ public class ValueInteger extends Returnable implements IValue {
     }
 
     @Override
-    public void load(NBTTagCompound NBTTag) {
+    public void loadNBT(NBTTagCompound NBTTag) {
         valueList = new ConcurrentHashMap<String, Integer>();
         if (NBTTag.hasKey(name)) {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
@@ -38,7 +38,7 @@ public class ValueInteger extends Returnable implements IValue {
     }
 
     @Override
-    public void save(NBTTagCompound NBTTag) {
+    public void saveNBT(NBTTagCompound NBTTag) {
         NBTTagCompound thisTag = new NBTTagCompound();
         for (Map.Entry<String, Integer> entry : this.valueList.entrySet()) {
             thisTag.setInt(entry.getKey(), entry.getValue());

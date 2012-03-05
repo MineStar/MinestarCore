@@ -3,10 +3,9 @@ package de.minestar.core.data.values;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import de.minestar.core.data.Returnable;
-
 import net.minecraft.server.NBTBase;
 import net.minecraft.server.NBTTagCompound;
+import de.minestar.core.data.Returnable;
 
 public class ValueBoolean extends Returnable implements IValue {
 
@@ -24,7 +23,7 @@ public class ValueBoolean extends Returnable implements IValue {
     }
 
     @Override
-    public void load(NBTTagCompound NBTTag) {
+    public void loadNBT(NBTTagCompound NBTTag) {
         valueList = new ConcurrentHashMap<String, Boolean>();
         if (NBTTag.hasKey(name)) {
             NBTTagCompound thisCompound = NBTTag.getCompound(name);
@@ -38,12 +37,11 @@ public class ValueBoolean extends Returnable implements IValue {
     }
 
     @Override
-    public void save(NBTTagCompound NBTTag) {
+    public void saveNBT(NBTTagCompound NBTTag) {
         NBTTagCompound thisTag = new NBTTagCompound();
         for (Map.Entry<String, Boolean> entry : this.valueList.entrySet()) {
             thisTag.setBoolean(entry.getKey(), entry.getValue());
         }
         NBTTag.setCompound(name, thisTag);
     }
-
 }

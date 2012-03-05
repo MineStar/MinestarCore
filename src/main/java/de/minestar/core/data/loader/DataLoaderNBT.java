@@ -36,16 +36,16 @@ public class DataLoaderNBT implements IDataLoader {
 
                 // LOAD DATA
                 if (rootTag != null) {
-                    this.data.getDataBool().load(rootTag);
-                    this.data.getDataByte().load(rootTag);
-                    this.data.getDataByte().load(rootTag);
-                    this.data.getDataDouble().load(rootTag);
-                    this.data.getDataFloat().load(rootTag);
-                    this.data.getDataInt().load(rootTag);
-                    this.data.getDataLong().load(rootTag);
-                    this.data.getDataShort().load(rootTag);
-                    this.data.getDataString().load(rootTag);
-                    this.data.getDataLocation().load(rootTag);
+                    this.data.getDataBool().loadNBT(rootTag);
+                    this.data.getDataByte().loadNBT(rootTag);
+                    this.data.getDataByte().loadNBT(rootTag);
+                    this.data.getDataDouble().loadNBT(rootTag);
+                    this.data.getDataFloat().loadNBT(rootTag);
+                    this.data.getDataInt().loadNBT(rootTag);
+                    this.data.getDataLong().loadNBT(rootTag);
+                    this.data.getDataShort().loadNBT(rootTag);
+                    this.data.getDataString().loadNBT(rootTag);
+                    this.data.getDataLocation().loadNBT(rootTag);
                 }
 
                 // CLOSE STREAM
@@ -64,16 +64,16 @@ public class DataLoaderNBT implements IDataLoader {
             FileOutputStream FOS = new FileOutputStream(tmpFile);
 
             NBTTagCompound rootTag = new NBTTagCompound();
-            this.data.getDataBool().save(rootTag);
-            this.data.getDataByte().save(rootTag);
-            this.data.getDataByteArray().save(rootTag);
-            this.data.getDataDouble().save(rootTag);
-            this.data.getDataFloat().save(rootTag);
-            this.data.getDataInt().save(rootTag);
-            this.data.getDataLong().save(rootTag);
-            this.data.getDataShort().save(rootTag);
-            this.data.getDataString().save(rootTag);
-            this.data.getDataLocation().save(rootTag);
+            this.data.getDataBool().saveNBT(rootTag);
+            this.data.getDataByte().saveNBT(rootTag);
+            this.data.getDataByteArray().saveNBT(rootTag);
+            this.data.getDataDouble().saveNBT(rootTag);
+            this.data.getDataFloat().saveNBT(rootTag);
+            this.data.getDataInt().saveNBT(rootTag);
+            this.data.getDataLong().saveNBT(rootTag);
+            this.data.getDataShort().saveNBT(rootTag);
+            this.data.getDataString().saveNBT(rootTag);
+            this.data.getDataLocation().saveNBT(rootTag);
 
             // GZIP THE TEMP-FILE
             CompressedStreamTools.writeGzippedCompoundToOutputStream(rootTag, FOS);

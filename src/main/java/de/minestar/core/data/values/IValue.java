@@ -7,7 +7,7 @@ public interface IValue extends IReturnable {
 
     public void setValue(String name, Object value);
 
-    public void load(NBTTagCompound NBTTag);
+    public void loadNBT(NBTTagCompound NBTTag);
 
-    public void save(NBTTagCompound NBTTag);
+    public void saveNBT(NBTTagCompound NBTTag);
 }
