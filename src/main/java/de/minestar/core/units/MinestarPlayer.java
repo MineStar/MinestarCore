@@ -2,6 +2,7 @@ package de.minestar.core.units;
 
 import java.io.File;
 
+import org.anjocaido.groupmanager.data.Group;
 import org.anjocaido.groupmanager.data.User;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -108,6 +109,21 @@ public class MinestarPlayer {
 
     public String getGroup() {
         return group;
+    }
+
+    public String setGroup(String groupName) {
+        // GET GROUP FROM GROUPMANAGER
+        if (MinestarCore.groupManager != null) {
+            User user = MinestarCore.groupManager.getWorldsHolder().getWorldData("world").getUser(playerName);
+            Group group = MinestarCore.groupManager.getWorldsHolder().getWorldData("world").getGroup(groupName);
+            user.setGroup(group);
+            MinestarCore.groupManager.getWorldsHolder().saveChanges();
+        } else {
+            throw new RuntimeException("Cannot change group: GroupManager not found!");
+        }
+        // UPDATE GROUP
+        this.updateGroup();
+        return this.getGroup();
     }
 
     public boolean isInGroup(String groupName) {
