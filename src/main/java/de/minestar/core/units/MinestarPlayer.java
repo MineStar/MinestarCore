@@ -1,3 +1,21 @@
+/*
+ * Copyright (C) 2012 MineStar.de 
+ * 
+ * This file is part of MinestarCore.
+ * 
+ * MinestarCore is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, version 3 of the License.
+ * 
+ * MinestarCore is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with MinestarCore.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package de.minestar.core.units;
 
 import java.io.File;
@@ -239,27 +257,27 @@ public class MinestarPlayer {
         return this.data.getValue(key, clazz);
     }
 
-    public boolean getBoolean(String key) {
+    public Boolean getBoolean(String key) {
         return this.data.getBoolean(key);
     }
 
-    public byte getByte(String key) {
+    public Byte getByte(String key) {
         return this.data.getByte(key);
     }
 
-    public byte[] getByteArray(String key) {
+    public Byte[] getByteArray(String key) {
         return this.data.getByteArray(key);
     }
 
-    public double getDouble(String key) {
+    public Double getDouble(String key) {
         return this.data.getDouble(key);
     }
 
-    public float getFloat(String key) {
+    public Float getFloat(String key) {
         return this.data.getFloat(key);
     }
 
-    public int getInteger(String key) {
+    public Integer getInteger(String key) {
         return this.data.getInteger(key);
     }
 
@@ -275,11 +293,11 @@ public class MinestarPlayer {
         return this.data.getLocation(key);
     }
 
-    public long getLong(String key) {
+    public Long getLong(String key) {
         return this.data.getLong(key);
     }
 
-    public short getShort(String key) {
+    public Short getShort(String key) {
         return this.data.getShort(key);
     }
 
