@@ -3,17 +3,23 @@ package de.minestar.core.data.loader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.concurrent.ConcurrentHashMap;
 
+import net.minecraft.server.NBTBase;
+import net.minecraft.server.NBTTagCompound;
 import de.minestar.core.data.Data;
+import de.minestar.core.data.GenericValue;
 import de.minestar.core.data.tools.CompressedStreamTools;
 
-import net.minecraft.server.NBTTagCompound;
-
-public class DataLoaderNBT implements IDataLoader {
+public class DataLoaderNBT extends NoneDataLoader {
     private File folder, file;
     private final String fileName;
 
     private final Data data;
+
+    private NBTTagCompound rootTag;
 
     public DataLoaderNBT(Data data, String fileName) {
         this(data, new File("/"), fileName);
@@ -28,14 +34,15 @@ public class DataLoaderNBT implements IDataLoader {
 
     @Override
     public void load() {
+        ConcurrentHashMap<String, ConcurrentHashMap<String, GenericValue>> valueMap = new ConcurrentHashMap<String, ConcurrentHashMap<String, GenericValue>>();
         if (this.file != null && this.file.exists()) {
             try {
                 // OPEN STREAM
                 FileInputStream FIS = new FileInputStream(this.file);
-                NBTTagCompound rootTag = CompressedStreamTools.loadGzippedCompoundFromOutputStream(FIS);
+                this.rootTag = CompressedStreamTools.loadGzippedCompoundFromOutputStream(FIS);
 
                 // LOAD DATA
-                if (rootTag != null) {
+                if (this.rootTag != null) {
                     this.data.getDataBool().loadNBT(rootTag);
                     this.data.getDataByte().loadNBT(rootTag);
                     this.data.getDataByte().loadNBT(rootTag);
@@ -90,4 +97,24 @@ public class DataLoaderNBT implements IDataLoader {
             e.printStackTrace();
         }
     }
+
+    @Override
+    public Collection<GenericValue<?>> loadBoolean() {
+        ArrayList<GenericValue<?>> valueList = new ArrayList<GenericValue<?>>();
+
+        final String keyName = "BOOLEAN";
+
+        if (rootTag.hasKey(keyName)) {
+            NBTTagCompound thisCompound = rootTag.getCompound(keyName);
+            for (Object base : thisCompound.d()) {
+                if (base instanceof NBTBase) {
+                    NBTBase thisTag = (NBTBase) base;
+                    valueList.add(new GenericValue<Boolean>(thisCompound.getBoolean(thisTag.getName())));
+                }
+            }
+        }
+
+        return valueList;
+    }
+
 }

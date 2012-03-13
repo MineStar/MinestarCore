@@ -12,7 +12,6 @@ import com.bukkit.gemo.utils.UtilPermissions;
 import de.minestar.core.MinestarCore;
 import de.minestar.core.data.Data;
 import de.minestar.core.data.DataType;
-import de.minestar.core.exceptions.BukkitPlayerOfflineException;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class MinestarPlayer {
@@ -141,7 +140,7 @@ public class MinestarPlayer {
         // GET THE PLAYER
         Player player = Bukkit.getPlayer(this.playerName);
         if (player == null)
-            throw new BukkitPlayerOfflineException(this.playerName);
+            return;
 
         player.setDisplayName(this.getNickName());
         player.setPlayerListName(this.getListName());
@@ -160,7 +159,7 @@ public class MinestarPlayer {
         // GET THE PLAYER
         Player player = Bukkit.getPlayer(this.playerName);
         if (player == null)
-            throw new BukkitPlayerOfflineException(this.playerName);
+            return null;
 
         return player;
     }
