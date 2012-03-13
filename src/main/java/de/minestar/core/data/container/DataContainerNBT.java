@@ -22,12 +22,10 @@ public class DataContainerNBT extends DataContainerNone {
 
     public DataContainerNBT() {
         super();
-        System.out.println("initializing NBT-Container DONE");
     }
 
     @Override
     public void load(File file) {
-        System.out.println("loading NBT-Container");
         if (file != null && file.exists()) {
             try {
                 // OPEN STREAM
@@ -57,7 +55,6 @@ public class DataContainerNBT extends DataContainerNone {
                 exception.printStackTrace();
             }
         }
-        System.out.println("loading NBT-Container done!");
     }
 
     @SuppressWarnings("rawtypes")
@@ -141,7 +138,7 @@ public class DataContainerNBT extends DataContainerNone {
             }
             rootTag.setCompound(name, thisTag);
 
-            // SAVE SHORRT
+            // SAVE SHORT
             currentMap = this.getMap(Short.class);
             thisTag = new NBTTagCompound();
             name = "SHORT";
@@ -160,7 +157,7 @@ public class DataContainerNBT extends DataContainerNone {
             rootTag.setCompound(name, thisTag);
 
             // SAVE LOCATION
-            currentMap = this.getMap(String.class);
+            currentMap = this.getMap(Location.class);
             thisTag = new NBTTagCompound();
             name = "LOCATION";
             for (Map.Entry<String, GenericValue> entry : currentMap.entrySet()) {

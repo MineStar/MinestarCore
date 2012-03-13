@@ -63,9 +63,9 @@ public class MinestarPlayer {
         // LOAD DATA FROM FILE
         this.data.load();
 
-        if (this.getString("general.nickName") == null)
+        if (this.getValue("general.nickName", String.class) == null)
             this.setString("general.nickName", this.playerName);
-        if (this.getString("general.listName") == null)
+        if (this.getValue("general.listName", String.class) == null)
             this.setString("general.listName", this.playerName);
     }
 

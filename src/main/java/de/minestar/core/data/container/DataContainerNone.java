@@ -21,7 +21,6 @@ public class DataContainerNone implements IDataContainer {
      * This method will initialize all needed var-fields
      */
     private void initVars() {
-        System.out.println("INIT VARS");
         // INIT THE MAP
         this.valueMap = new ConcurrentHashMap<String, ConcurrentHashMap<String, GenericValue>>();
 
@@ -42,7 +41,6 @@ public class DataContainerNone implements IDataContainer {
     }
 
     private void initObject(Class clazz) {
-        System.out.println("init map : " + clazz.getName());
         this.valueMap.put(clazz.getName(), new ConcurrentHashMap<String, GenericValue>());
     }
 
@@ -51,7 +49,6 @@ public class DataContainerNone implements IDataContainer {
     }
 
     public void setValue(String key, Object value) {
-        System.out.println("setting : " + key + " ( " + value.getClass().getName() + " ) ");
         ConcurrentHashMap<String, GenericValue> thisValues = this.valueMap.get(value.getClass().getName());
         if (thisValues == null) {
             throw new RuntimeException(value.getClass().getName() + " IS CURRENTLY NOT SUPPORTED!");
@@ -63,14 +60,10 @@ public class DataContainerNone implements IDataContainer {
 
     @SuppressWarnings("unchecked")
     public <T> GenericValue<T> getValue(String key, Class<T> clazz) {
-        System.out.println("getting : " + key + " ( " + clazz.getName() + " ) ");
         ConcurrentHashMap<String, GenericValue> thisValues = this.valueMap.get(clazz.getName());
         if (thisValues != null) {
-            System.out.println("FOUND");
             return thisValues.get(key);
         }
-
-        System.out.println("NOT FOUND");
         return null;
     }
 

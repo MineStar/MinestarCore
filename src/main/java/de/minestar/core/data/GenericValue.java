@@ -15,9 +15,10 @@ public class GenericValue<R> {
     }
 
     /**
-     * @param value the value to set
+     * @param value
+     *            the value to set
      */
     public void setValue(R value) {
         this.value = value;
-    }   
+    }
 }
