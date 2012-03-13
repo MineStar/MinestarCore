@@ -11,9 +11,9 @@ import org.bukkit.entity.Player;
 import com.bukkit.gemo.utils.UtilPermissions;
 
 import de.minestar.core.MinestarCore;
-import de.minestar.core.data.Data;
-import de.minestar.core.data.DataType;
-import de.minestar.core.data.GenericValue;
+import de.minestar.minestarlibrary.data.Data;
+import de.minestar.minestarlibrary.data.DataType;
+import de.minestar.minestarlibrary.data.GenericValue;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class MinestarPlayer {
