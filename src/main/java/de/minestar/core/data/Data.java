@@ -128,50 +128,86 @@ public class Data {
     // ///////////////////////////////////////////////
 
     public boolean getBoolean(String key) {
-        return this.getValue(key, Boolean.class).getValue();
+        GenericValue<Boolean> value = this.getValue(key, boolean.class);
+        if (value == null)
+            return false;
+        return value.getValue();
     }
 
     public byte getByte(String key) {
-        return this.getValue(key, byte.class).getValue();
+        GenericValue<Byte> value = this.getValue(key, byte.class);
+        if (value == null)
+            return 0;
+        return value.getValue();
     }
 
     public byte[] getByteArray(String key) {
-        return this.getValue(key, byte[].class).getValue();
+        GenericValue<byte[]> value = this.getValue(key, byte[].class);
+        if (value == null)
+            return null;
+        return value.getValue();
     }
 
     public double getDouble(String key) {
-        return this.getValue(key, double.class).getValue();
+        GenericValue<Double> value = this.getValue(key, double.class);
+        if (value == null)
+            return 0;
+        return value.getValue();
     }
 
     public float getFloat(String key) {
-        return this.getValue(key, float.class).getValue();
+        GenericValue<Float> value = this.getValue(key, float.class);
+        if (value == null)
+            return 0;
+        return value.getValue();
     }
 
     public int getInteger(String key) {
-        return this.getValue(key, int.class).getValue();
+        GenericValue<Integer> value = this.getValue(key, int.class);
+        if (value == null)
+            return 0;
+        return value.getValue();
     }
 
     public long getLong(String key) {
-        return this.getValue(key, long.class).getValue();
+        GenericValue<Long> value = this.getValue(key, long.class);
+        if (value == null)
+            return 0;
+        return value.getValue();
     }
 
     public short getShort(String key) {
-        return this.getValue(key, short.class).getValue();
+        GenericValue<Short> value = this.getValue(key, short.class);
+        if (value == null)
+            return 0;
+        return value.getValue();
     }
 
     public String getString(String key) {
-        return this.getValue(key, String.class).getValue();
+        GenericValue<String> value = this.getValue(key, String.class);
+        if (value == null)
+            return null;
+        return value.getValue();
     }
 
     public Location getLocation(String key) {
-        return this.getValue(key, Location.class).getValue();
+        GenericValue<Location> value = this.getValue(key, Location.class);
+        if (value == null)
+            return null;
+        return value.getValue();
     }
 
     public ItemStack getItemStack(String key) {
-        return this.getValue(key, ItemStack.class).getValue();
+        GenericValue<ItemStack> value = this.getValue(key, ItemStack.class);
+        if (value == null)
+            return null;
+        return value.getValue();
     }
 
     public ItemStack[] getItemStackArray(String key) {
-        return this.getValue(key, ItemStack[].class).getValue();
+        GenericValue<ItemStack[]> value = this.getValue(key, ItemStack[].class);
+        if (value == null)
+            return null;
+        return value.getValue();
     }
 }

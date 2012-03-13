@@ -63,9 +63,9 @@ public class MinestarPlayer {
         // LOAD DATA FROM FILE
         this.data.load();
 
-        if (this.getValue("general.nickName", String.class) == null)
+        if (this.getString("general.nickName") == null)
             this.setString("general.nickName", this.playerName);
-        if (this.getValue("general.listName", String.class) == null)
+        if (this.getString("general.listName") == null)
             this.setString("general.listName", this.playerName);
     }
 
@@ -240,31 +240,31 @@ public class MinestarPlayer {
     }
 
     public boolean getBoolean(String key) {
-        return this.getValue(key, Boolean.class).getValue();
+        return this.data.getBoolean(key);
     }
 
     public byte getByte(String key) {
-        return this.getValue(key, Byte.class).getValue();
+        return this.data.getByte(key);
     }
 
-    public Byte[] getByteArray(String key) {
-        return this.getValue(key, Byte[].class).getValue();
+    public byte[] getByteArray(String key) {
+        return this.data.getByteArray(key);
     }
 
     public double getDouble(String key) {
-        return this.getValue(key, Double.class).getValue();
+        return this.data.getDouble(key);
     }
 
     public float getFloat(String key) {
-        return this.getValue(key, Float.class).getValue();
+        return this.data.getFloat(key);
     }
 
     public int getInteger(String key) {
-        return this.getValue(key, Integer.class).getValue();
+        return this.data.getInteger(key);
     }
 
 //    public ItemStack getItemStack(String key) {
-//        return this.data.getItemStack(key);
+//       return this.data.getItemStack(key);
 //    }
 //
 //    public ItemStack[] getItemStackArray(String key) {
@@ -272,18 +272,18 @@ public class MinestarPlayer {
 //    }
 
     public Location getLocation(String key) {
-        return this.getValue(key, Location.class).getValue();
+        return this.data.getLocation(key);
     }
 
     public long getLong(String key) {
-        return this.getValue(key, Long.class).getValue();
+        return this.data.getLong(key);
     }
 
     public short getShort(String key) {
-        return this.getValue(key, Short.class).getValue();
+        return this.data.getShort(key);
     }
 
     public String getString(String key) {
-        return this.getValue(key, String.class).getValue();
+        return this.data.getString(key);
     }
 }
