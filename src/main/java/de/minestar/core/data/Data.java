@@ -1,96 +1,48 @@
 package de.minestar.core.data;
 
 import java.io.File;
-import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 
-import de.minestar.core.data.loader.DataLoaderNBT;
-import de.minestar.core.data.loader.IDataLoader;
-import de.minestar.core.data.values.IValue;
-import de.minestar.core.data.values.ValueBoolean;
-import de.minestar.core.data.values.ValueByte;
-import de.minestar.core.data.values.ValueByteArray;
-import de.minestar.core.data.values.ValueDouble;
-import de.minestar.core.data.values.ValueFloat;
-import de.minestar.core.data.values.ValueInteger;
-import de.minestar.core.data.values.ValueLocation;
-import de.minestar.core.data.values.ValueLong;
-import de.minestar.core.data.values.ValueShort;
-import de.minestar.core.data.values.ValueString;
+import de.minestar.core.data.container.DataContainerNBT;
+import de.minestar.core.data.container.DataContainerNone;
+import de.minestar.core.data.container.IDataContainer;
 
-@SuppressWarnings("rawtypes")
 public class Data {
 
     // VARS
-    private IDataLoader dataLoader;
-    private IValue dataBool, dataByte, dataByteArray, dataDouble, dataFloat, dataInt, dataLong, dataShort, dataString, dataLocation;
+    private IDataContainer dataContainer;
+    private File file;
 
-    private ConcurrentHashMap<String, ConcurrentHashMap<String, GenericValue>> valueMap = new ConcurrentHashMap<String, ConcurrentHashMap<String, GenericValue>>();;
+    public Data() {
+        this.dataContainer = new DataContainerNone();
+    }
 
     public Data(String fileName, DataType type) {
         this(new File("/"), fileName, type);
     }
 
     public Data(File dataFolder, String fileName, DataType type) {
+        this.file = new File(dataFolder, fileName + type.getEnding());
         switch (type) {
             case NBT : {
-                this.dataLoader = new DataLoaderNBT(this, dataFolder, fileName + type.getEnding());
+                this.dataContainer = new DataContainerNBT();
                 break;
             }
             default : {
-                this.dataLoader = null;
-                throw new RuntimeException("TYPE '" + type.getName() + "' is not supported yet!");
+                this.dataContainer = new DataContainerNone();
+                break;
             }
         }
-
-        // INIT VARS
-        this.initVars();
-    }
-
-    /**
-     * This method will initialize all needed var-fields
-     */
-    private void initVars() {
-        this.dataBool = new ValueBoolean();
-        this.dataByte = new ValueByte();
-        this.dataByteArray = new ValueByteArray();
-        this.dataDouble = new ValueDouble();
-        this.dataFloat = new ValueFloat();
-        this.dataInt = new ValueInteger();
-        this.dataLong = new ValueLong();
-        this.dataShort = new ValueShort();
-        this.dataString = new ValueString();
-        this.dataLocation = new ValueLocation();
-
-        // INIT ALL OBJECTS THAT ARE CURRENTLY USED
-        // TODO: WE WANT TO MAKE THIS AUTOMATICLY
-
-        this.initObject(Boolean.class);
-        this.initObject(Byte.class);
-        this.initObject(Byte[].class);
-        this.initObject(Double.class);
-        this.initObject(Float.class);
-        this.initObject(Integer.class);
-        this.initObject(Long.class);
-        this.initObject(Short.class);
-        this.initObject(String.class);
-        this.initObject(Location.class);
-        this.initObject(ItemStack.class);
-        this.initObject(ItemStack[].class);
-    }
-
-    private void initObject(Class clazz) {
-        this.valueMap.put(clazz.getName(), new ConcurrentHashMap<String, GenericValue>());
     }
 
     /**
      * This method will save the file
      */
     public void save() {
-        if (this.dataLoader != null) {
-            this.dataLoader.save();
+        if (this.dataContainer != null) {
+            this.dataContainer.save(this.file);
         } else {
             throw new RuntimeException("Error while saving Data: DataLoader is NULL!");
         }
@@ -100,8 +52,8 @@ public class Data {
      * This method will load all the data from the file
      */
     public void load() {
-        if (this.dataLoader != null) {
-            this.dataLoader.load();
+        if (this.dataContainer != null) {
+            this.dataContainer.load(this.file);
         } else {
             throw new RuntimeException("Error while loading Data: DataLoader is NULL!");
         }
@@ -114,22 +66,11 @@ public class Data {
     // ///////////////////////////////////////////////
 
     public void setValue(String key, Object value) {
-        ConcurrentHashMap<String, GenericValue> thisValues = this.valueMap.get(value.getClass().getName());
-        if (thisValues == null) {
-            throw new RuntimeException(value.getClass().getName() + " IS CURRENTLY NOT SUPPORTED!");
-        }
-
-        GenericValue thisV = new GenericValue<Object>(value);
-        thisValues.put(key, thisV);
+        this.dataContainer.setValue(key, value);
     }
 
-    @SuppressWarnings("unchecked")
     public <T> GenericValue<T> getValue(String key, Class<T> clazz) {
-        ConcurrentHashMap<String, GenericValue> thisValues = this.valueMap.get(clazz.getName());
-        if (thisValues != null) {
-            return thisValues.get(key);
-        }
-        return null;
+        return this.dataContainer.getValue(key, clazz);
     }
 
     public void setBoolean(String key, boolean value) {
@@ -232,75 +173,5 @@ public class Data {
 
     public ItemStack[] getItemStackArray(String key) {
         return this.getValue(key, ItemStack[].class).getValue();
-    }
-
-    /**
-     * @return the dataBool
-     */
-    public IValue getDataBool() {
-        return dataBool;
-    }
-
-    /**
-     * @return the dataByte
-     */
-    public IValue getDataByte() {
-        return dataByte;
-    }
-
-    /**
-     * @return the dataByteArray
-     */
-    public IValue getDataByteArray() {
-        return dataByteArray;
-    }
-
-    /**
-     * @return the dataDouble
-     */
-    public IValue getDataDouble() {
-        return dataDouble;
-    }
-
-    /**
-     * @return the dataFloat
-     */
-    public IValue getDataFloat() {
-        return dataFloat;
-    }
-
-    /**
-     * @return the dataInt
-     */
-    public IValue getDataInt() {
-        return dataInt;
-    }
-
-    /**
-     * @return the dataLong
-     */
-    public IValue getDataLong() {
-        return dataLong;
-    }
-
-    /**
-     * @return the dataShort
-     */
-    public IValue getDataShort() {
-        return dataShort;
-    }
-
-    /**
-     * @return the dataString
-     */
-    public IValue getDataString() {
-        return dataString;
-    }
-
-    /**
-     * @return the dataLocation
-     */
-    public IValue getDataLocation() {
-        return dataLocation;
     }
 }

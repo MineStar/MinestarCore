@@ -1,6 +1,6 @@
-package de.minestar.core.data.loader;
+package de.minestar.core.data.container;
 
-import java.util.Collection;
+import java.io.File;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Location;
@@ -8,11 +8,12 @@ import org.bukkit.inventory.ItemStack;
 
 import de.minestar.core.data.GenericValue;
 
-public class NoneDataLoader implements IDataLoader {
+@SuppressWarnings("rawtypes")
+public class DataContainerNone implements IDataContainer {
 
-    private ConcurrentHashMap<String, ConcurrentHashMap<String, GenericValue<?>>> valueMap;
+    private ConcurrentHashMap<String, ConcurrentHashMap<String, GenericValue>> valueMap;
 
-    public NoneDataLoader() {
+    public DataContainerNone() {
         this.initVars();
     }
 
@@ -20,8 +21,9 @@ public class NoneDataLoader implements IDataLoader {
      * This method will initialize all needed var-fields
      */
     private void initVars() {
+        System.out.println("INIT VARS");
         // INIT THE MAP
-        this.valueMap = new ConcurrentHashMap<String, ConcurrentHashMap<String, GenericValue<?>>>();
+        this.valueMap = new ConcurrentHashMap<String, ConcurrentHashMap<String, GenericValue>>();
 
         // INIT ALL OBJECTS THAT ARE CURRENTLY USED
         // TODO: WE WANT TO MAKE THIS AUTOMATICLY
@@ -39,12 +41,18 @@ public class NoneDataLoader implements IDataLoader {
         this.initObject(ItemStack[].class);
     }
 
-    private void initObject(Class<?> clazz) {
-        this.valueMap.put(clazz.getName(), new ConcurrentHashMap<String, GenericValue<?>>());
+    private void initObject(Class clazz) {
+        System.out.println("init map : " + clazz.getName());
+        this.valueMap.put(clazz.getName(), new ConcurrentHashMap<String, GenericValue>());
+    }
+
+    public ConcurrentHashMap<String, GenericValue> getMap(Class clazz) {
+        return this.valueMap.get(clazz.getName());
     }
 
     public void setValue(String key, Object value) {
-        ConcurrentHashMap<String, GenericValue<?>> thisValues = this.valueMap.get(value.getClass().getName());
+        System.out.println("setting : " + key + " ( " + value.getClass().getName() + " ) ");
+        ConcurrentHashMap<String, GenericValue> thisValues = this.valueMap.get(value.getClass().getName());
         if (thisValues == null) {
             throw new RuntimeException(value.getClass().getName() + " IS CURRENTLY NOT SUPPORTED!");
         }
@@ -53,81 +61,86 @@ public class NoneDataLoader implements IDataLoader {
         thisValues.put(key, thisV);
     }
 
-    public <T> GenericValue<?> getValue(String key, Class<T> clazz) {
-        ConcurrentHashMap<String, GenericValue<?>> thisValues = this.valueMap.get(clazz.getName());
+    @SuppressWarnings("unchecked")
+    public <T> GenericValue<T> getValue(String key, Class<T> clazz) {
+        System.out.println("getting : " + key + " ( " + clazz.getName() + " ) ");
+        ConcurrentHashMap<String, GenericValue> thisValues = this.valueMap.get(clazz.getName());
         if (thisValues != null) {
+            System.out.println("FOUND");
             return thisValues.get(key);
         }
+
+        System.out.println("NOT FOUND");
         return null;
     }
 
     @Override
-    public void load() {
+    public void load(File file) {
         throw new RuntimeException("LOADING is currently not supported!");
     }
 
     @Override
-    public void save() {
+    public void save(File file) {
         throw new RuntimeException("SAVING is currently not supported!");
     }
 
     @Override
-    public Collection<GenericValue<?>> loadBoolean() {
+    public void loadBoolean() {
         throw new RuntimeException("Boolean is currently not supported!");
     }
 
     @Override
-    public Collection<GenericValue<?>> loadByte() {
+    public void loadByte() {
         throw new RuntimeException("Byte is currently not supported!");
     }
 
     @Override
-    public Collection<GenericValue<?>> loadByteArray() {
+    public void loadByteArray() {
         throw new RuntimeException("Byte[] is currently not supported!");
     }
 
     @Override
-    public Collection<GenericValue<?>> loadDouble() {
+    public void loadDouble() {
         throw new RuntimeException("Double is currently not supported!");
     }
 
     @Override
-    public Collection<GenericValue<?>> loadFloat() {
+    public void loadFloat() {
         throw new RuntimeException("Float is currently not supported!");
     }
 
     @Override
-    public Collection<GenericValue<?>> loadInteger() {
+    public void loadInteger() {
         throw new RuntimeException("Integer is currently not supported!");
     }
 
     @Override
-    public Collection<GenericValue<?>> loadLong() {
+    public void loadLong() {
         throw new RuntimeException("Long is currently not supported!");
     }
 
     @Override
-    public Collection<GenericValue<?>> loadShort() {
+    public void loadShort() {
         throw new RuntimeException("Short is currently not supported!");
     }
 
     @Override
-    public Collection<GenericValue<?>> loadString() {
+    public void loadString() {
         throw new RuntimeException("String is currently not supported!");
     }
 
     @Override
-    public Collection<GenericValue<?>> loadItemStack() {
+    public void loadItemStack() {
         throw new RuntimeException("ItemStack is currently not supported!");
     }
 
     @Override
-    public Collection<GenericValue<?>> loadItemStackArray() {
+    public void loadItemStackArray() {
         throw new RuntimeException("ItemStack[] is currently not supported!");
     }
 
     @Override
-    public Collection<GenericValue<?>> loadLocation() {
+    public void loadLocation() {
         throw new RuntimeException("Location is currently not supported!");
     }
 }

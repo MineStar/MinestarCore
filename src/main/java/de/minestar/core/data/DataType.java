@@ -2,6 +2,8 @@ package de.minestar.core.data;
 
 public enum DataType {
 
+    NONE("NONE", ""),
+
     NBT("NBT", ".dat"),
 
     XML("XML", ".xml"),
