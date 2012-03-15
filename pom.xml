@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.minestar</groupId>
 	<artifactId>MinestarCore</artifactId>
-	<version>1.6-snapshot</version>
+	<version>1.6</version>
 	<name>MinestarCore</name>
 	<build>
 		<plugins>
@@ -80,7 +80,7 @@
 		<dependency>
 			<groupId>de.minestar</groupId>
 			<artifactId>minestarlibrary</artifactId>
-			<version>1.6.2</version>
+			<version>1.6.3</version>
 		</dependency>
 		<dependency>
 			<groupId>de.minestar</groupId>

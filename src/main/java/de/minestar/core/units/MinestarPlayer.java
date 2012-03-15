@@ -198,6 +198,10 @@ public class MinestarPlayer {
         this.data.setValue(key, value);
     }
 
+    public void removeValue(String key, Class<?> clazz) {
+        this.data.removeValue(key, clazz);
+    }
+
     public void setBoolean(String key, boolean value) {
         this.setValue(key, value);
     }
