@@ -38,6 +38,7 @@ public class MinestarPlayer {
     private boolean online = false;
     private final String playerName;
     private String group;
+    private MinestarGroup msGroup;
     private Data data;
 
     public MinestarPlayer(String playerName) {
@@ -116,18 +117,28 @@ public class MinestarPlayer {
             // GET GROUP WITH UTILPERMISSIONS
             this.group = UtilPermissions.getGroupName(player);
         } else {
-            this.group = "default";
+            this.group = MinestarGroup.DEFAULT.getName();
             // GET GROUP FROM GROUPMANAGER
             if (MinestarCore.groupManager != null) {
                 User user = MinestarCore.groupManager.getWorldsHolder().getWorldData("world").getUser(playerName);
                 this.group = user.getGroupName();
             }
         }
+        this.msGroup = MinestarGroup.getGroup(this.group);
         return getGroup();
     }
 
     public String getGroup() {
-        return group;
+        return this.group;
+    }
+
+    public MinestarGroup getMinestarGroup() {
+        return this.msGroup;
+    }
+
+    public MinestarGroup setGroup(MinestarGroup group) {
+        this.setGroup(group.getName());
+        return this.msGroup;
     }
 
     public String setGroup(String groupName) {
