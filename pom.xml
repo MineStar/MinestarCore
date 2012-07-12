@@ -94,9 +94,9 @@
 			<version>0.92.3alpha</version>
 		</dependency>
 		<dependency>
-			<groupId>de.minestar</groupId>
+			<groupId>org.anjocaido.groupmanager</groupId>
 			<artifactId>GroupManager</artifactId>
-			<version>1</version>
+			<version>1.0-Alpha-5</version>
 		</dependency>
 	</dependencies>
 </project>
