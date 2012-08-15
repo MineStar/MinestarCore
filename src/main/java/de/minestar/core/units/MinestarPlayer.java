@@ -144,9 +144,16 @@ public class MinestarPlayer {
     public String setGroup(String groupName) {
         // GET GROUP FROM GROUPMANAGER
         if (MinestarCore.groupManager != null) {
+            // update "world"
             User user = MinestarCore.groupManager.getWorldsHolder().getWorldData("world").getUser(playerName);
             Group group = MinestarCore.groupManager.getWorldsHolder().getWorldData("world").getGroup(groupName);
             user.setGroup(group);
+
+            // update "goldgrube"
+            user = MinestarCore.groupManager.getWorldsHolder().getWorldData("goldgrube").getUser(playerName);
+            group = MinestarCore.groupManager.getWorldsHolder().getWorldData("goldgrube").getGroup(groupName);
+            user.setGroup(group);
+
             MinestarCore.groupManager.getWorldsHolder().saveChanges();
         } else {
             throw new RuntimeException("Cannot change group: GroupManager not found!");
