@@ -64,7 +64,7 @@ public class MinestarCore extends JavaPlugin {
         // GET GROUPMANAGER
         this.getGroupManager();
 
-        File playerFolder = new File(dataFolder, "\\playerdata");
+        File playerFolder = new File(dataFolder, "playerdata");
         playerFolder.mkdir();
 
         // CREATE MANAGER, LISTENER, COMMANDS
