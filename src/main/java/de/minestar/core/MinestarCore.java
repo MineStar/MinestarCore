@@ -24,16 +24,18 @@ import org.anjocaido.groupmanager.GroupManager;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.plugin.PluginManager;
 
 import de.minestar.core.listener.ConnectionListener;
 import de.minestar.core.manager.PlayerManager;
 import de.minestar.core.units.MinestarPlayer;
+import de.minestar.minestarlibrary.AbstractCore;
 import de.minestar.minestarlibrary.utils.ConsoleUtils;
 
-public class MinestarCore extends JavaPlugin {
+public class MinestarCore extends AbstractCore {
 
-    public static String pluginName = "MinestarCore";
+    public static String NAME = "MinestarCore";
+
     public static File dataFolder;
     public static GroupManager groupManager = null;
 
@@ -47,35 +49,45 @@ public class MinestarCore extends JavaPlugin {
      */
     private ConnectionListener connectionListener;
 
-    @Override
-    public void onDisable() {
-        // SAVE PLAYERS
-        playerManager.savePlayers();
-
-        // PRINT INFO
-        ConsoleUtils.printInfo(pluginName, "Disabled v" + this.getDescription().getVersion() + "!");
+    public MinestarCore() {
+        super(NAME);
     }
 
     @Override
-    public void onEnable() {
-        dataFolder = this.getDataFolder();
-        dataFolder.mkdirs();
+    protected boolean commonDisable() {
+        // SAVE PLAYERS
+        playerManager.savePlayers();
+        return super.commonDisable();
+    }
 
+    @Override
+    protected boolean loadingConfigs(File dataFolder) {
         // GET GROUPMANAGER
         this.getGroupManager();
 
-        File playerFolder = new File(dataFolder, "playerdata");
+        // CREATE FOLDER "playerdata"
+        File playerFolder = new File(this.getDataFolder(), "playerdata");
         playerFolder.mkdir();
 
-        // CREATE MANAGER, LISTENER, COMMANDS
-        this.createManager();
-        this.createListener();
+        return super.loadingConfigs(dataFolder);
+    }
 
-        // REGISTER EVENTS
-        this.registerEvents();
+    @Override
+    protected boolean createManager() {
+        MinestarCore.playerManager = new PlayerManager();
+        return super.createManager();
+    }
 
-        // PRINT INFO
-        ConsoleUtils.printInfo(pluginName, "Enabled v" + this.getDescription().getVersion() + "!");
+    @Override
+    protected boolean createListener() {
+        this.connectionListener = new ConnectionListener(playerManager);
+        return super.createListener();
+    }
+
+    @Override
+    protected boolean registerEvents(PluginManager pm) {
+        pm.registerEvents(this.connectionListener, this);
+        return super.registerEvents(pm);
     }
 
     private void getGroupManager() {
@@ -83,19 +95,7 @@ public class MinestarCore extends JavaPlugin {
         if (gm != null && gm.isEnabled())
             MinestarCore.groupManager = (GroupManager) gm;
         else
-            ConsoleUtils.printError(MinestarCore.pluginName, "Can't find GroupManager was not found!");
-    }
-
-    private void createManager() {
-        playerManager = new PlayerManager();
-    }
-
-    private void createListener() {
-        this.connectionListener = new ConnectionListener(playerManager);
-    }
-
-    private void registerEvents() {
-        Bukkit.getPluginManager().registerEvents(this.connectionListener, this);
+            ConsoleUtils.printError(MinestarCore.NAME, "Can't find GroupManager was not found!");
     }
 
     public static MinestarPlayer getPlayer(String playerName) {
