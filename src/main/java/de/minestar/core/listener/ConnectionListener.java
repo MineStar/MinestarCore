@@ -24,7 +24,6 @@ import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
-import org.bukkit.event.player.PlayerPreLoginEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
@@ -45,11 +44,6 @@ public class ConnectionListener implements Listener {
         thisPlayer.setOnline();
         thisPlayer.updateGroup();
         thisPlayer.updateBukkitPlayer();
-    }
-
-    @EventHandler(priority = EventPriority.LOWEST)
-    public void onPlayerPreLogin(PlayerPreLoginEvent event) {
-        this.playerManager.getPlayer(event.getName());
     }
 
     @EventHandler(priority = EventPriority.LOWEST)
