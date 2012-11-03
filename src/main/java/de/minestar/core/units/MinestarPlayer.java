@@ -77,7 +77,7 @@ public class MinestarPlayer {
         this.updateGroup();
 
         // INIT DATA
-        this.data = new Data(new File(MinestarCore.dataFolder, "playerdata"), playerName, DataType.NBT);
+        this.data = new Data(new File("plugins/MinestarCore", "playerdata"), playerName, DataType.NBT);
 
         // LOAD DATA FROM FILE
         this.data.load();
