@@ -65,6 +65,8 @@ public class MinestarCore extends AbstractCore {
         // GET GROUPMANAGER
         this.getGroupManager();
 
+        MinestarCore.dataFolder = this.getDataFolder();
+
         // CREATE FOLDER "playerdata"
         File playerFolder = new File(this.getDataFolder(), "playerdata");
         playerFolder.mkdir();
