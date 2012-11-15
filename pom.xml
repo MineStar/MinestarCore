@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>de.minestar</groupId>
 	<artifactId>MinestarCore</artifactId>
-	<version>1.6.6</version>
+	<version>1.7</version>
 	<name>MinestarCore</name>
 	<distributionManagement>
 		<!-- use the following if you're not using a snapshot version. -->
@@ -95,12 +95,12 @@
 		<dependency>
 			<groupId>de.minestar</groupId>
 			<artifactId>minestarlibrary</artifactId>
-			<version>1.9</version>
+			<version>1.9.2</version>
 		</dependency>
 		<dependency>
 			<groupId>de.minestar</groupId>
 			<artifactId>FalseBookCore</artifactId>
-			<version>0.92.3alpha</version>
+			<version>0.95alpha</version>
 		</dependency>
 		<dependency>
 			<groupId>org.anjocaido.groupmanager</groupId>
