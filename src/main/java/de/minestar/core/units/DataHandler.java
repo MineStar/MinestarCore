@@ -5,8 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.logging.Logger;
 
-import net.minecraft.server.v1_4_6.EntityPlayer;
-import net.minecraft.server.v1_4_6.NBTTagCompound;
+import net.minecraft.server.v1_5_R2.EntityPlayer;
+import net.minecraft.server.v1_5_R2.NBTTagCompound;
 import de.minestar.core.MinestarCore;
 import de.minestar.minestarlibrary.data.tools.CompressedStreamTools;
 
