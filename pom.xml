@@ -107,5 +107,5 @@
 		<version>1.4.6_1</version>
 		<relativePath>../MinestarPlugins</relativePath>
 	</parent>
-	<version>1.5.2_R2-SNAPSHOT</version>
+	<version>1.5.2_R1-SNAPSHOT</version>
 </project>
