@@ -5,8 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.logging.Logger;
 
-import net.minecraft.server.v1_5_R2.EntityPlayer;
-import net.minecraft.server.v1_5_R2.NBTTagCompound;
+import net.minecraft.server.v1_4_R1.EntityPlayer;
+import net.minecraft.server.v1_4_R1.NBTTagCompound;
 import de.minestar.core.MinestarCore;
 import de.minestar.minestarlibrary.data.tools.CompressedStreamTools;
 
@@ -40,8 +40,8 @@ public class DataHandler {
 
             NBTTagCompound var2 = new NBTTagCompound();
             entityPlayer.b(var2);
-            File var3 = new File(playersDirectory, entityPlayer.name + ".dat.tmp");
-            File var4 = new File(playersDirectory, entityPlayer.name + ".dat");
+            File var3 = new File(playersDirectory, entityPlayer.getBukkitEntity().getName() + ".dat.tmp");
+            File var4 = new File(playersDirectory, entityPlayer.getBukkitEntity().getName() + ".dat");
             CompressedStreamTools.writeGzippedCompoundToOutputStream(var2, new FileOutputStream(var3));
 
             if (var4.exists()) {
