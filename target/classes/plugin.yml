@@ -1,4 +1,4 @@
 name: MinestarCore
 main: de.minestar.core.MinestarCore
-version: 1.5.2_R2-SNAPSHOT
+version: 1.6.2_R1-SNAPSHOT
 depend: [MineStarLibrary, FalseBookCore, GroupManager]

@@ -5,8 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.logging.Logger;
 
-import net.minecraft.server.v1_5_R3.EntityPlayer;
-import net.minecraft.server.v1_5_R3.NBTTagCompound;
+import net.minecraft.server.v1_6_R2.EntityPlayer;
+import net.minecraft.server.v1_6_R2.NBTTagCompound;
 import de.minestar.core.MinestarCore;
 import de.minestar.minestarlibrary.data.tools.CompressedStreamTools;
 
@@ -40,8 +40,8 @@ public class DataHandler {
 
             NBTTagCompound var2 = new NBTTagCompound();
             entityPlayer.b(var2);
-            File var3 = new File(playersDirectory, entityPlayer.name + ".dat.tmp");
-            File var4 = new File(playersDirectory, entityPlayer.name + ".dat");
+            File var3 = new File(playersDirectory, entityPlayer.getName() + ".dat.tmp");
+            File var4 = new File(playersDirectory, entityPlayer.getName() + ".dat");
             CompressedStreamTools.writeGzippedCompoundToOutputStream(var2, new FileOutputStream(var3));
 
             if (var4.exists()) {
@@ -50,7 +50,7 @@ public class DataHandler {
 
             var3.renameTo(var4);
         } catch (Exception var5) {
-            logger.warning("Failed to save player data for " + entityPlayer.name);
+            logger.warning("Failed to save player data for " + entityPlayer.getName());
         }
     }
 
@@ -58,7 +58,7 @@ public class DataHandler {
      * Reads the player data from disk into the specified PlayerEntityMP.
      */
     public void loadPlayerData(String worldName, EntityPlayer entityPlayer) {
-        NBTTagCompound par1NBTTagCompound = this.loadPlayerDataFromFile(worldName, entityPlayer.name);
+        NBTTagCompound par1NBTTagCompound = this.loadPlayerDataFromFile(worldName, entityPlayer.getName());
 
         if (par1NBTTagCompound != null) {
             entityPlayer.a(par1NBTTagCompound);
