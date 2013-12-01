@@ -4,7 +4,7 @@
 	<artifactId>MinestarCore</artifactId>
 	<groupId>de.minestar</groupId>
 	<name>MinestarCore</name>
-	<version>1.6.2_R1-SNAPSHOT</version>
+	<version>1.7.2_R0.1-SNAPSHOT</version>
 
 	<distributionManagement>
 		<!-- use the following if you're not using a snapshot version. -->
@@ -52,7 +52,7 @@
 		<dependency>
 			<groupId>de.minestar</groupId>
 			<artifactId>MineStarLibrary</artifactId>
-			<version>1.6.2_R1-SNAPSHOT</version>
+			<version>1.7.2_R0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.anjocaido.groupmanager</groupId>
