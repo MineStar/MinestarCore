@@ -6,9 +6,9 @@ import java.io.FileOutputStream;
 import java.util.logging.Logger;
 
 import net.minecraft.server.v1_7_R1.EntityPlayer;
+import net.minecraft.server.v1_7_R1.NBTCompressedStreamTools;
 import net.minecraft.server.v1_7_R1.NBTTagCompound;
 import de.minestar.core.MinestarCore;
-import de.minestar.minestarlibrary.data.tools.CompressedStreamTools;
 
 public class DataHandler {
     /** Reference to the logger. */
@@ -42,7 +42,7 @@ public class DataHandler {
             entityPlayer.b(var2);
             File var3 = new File(playersDirectory, entityPlayer.getName() + ".dat.tmp");
             File var4 = new File(playersDirectory, entityPlayer.getName() + ".dat");
-            CompressedStreamTools.writeGzippedCompoundToOutputStream(var2, new FileOutputStream(var3));
+            NBTCompressedStreamTools.a(var2, new FileOutputStream(var3));
 
             if (var4.exists()) {
                 var4.delete();
@@ -76,7 +76,7 @@ public class DataHandler {
             File var2 = new File(playersDirectory, playerName + ".dat");
 
             if (var2.exists()) {
-                return CompressedStreamTools.loadGzippedCompoundFromOutputStream(new FileInputStream(var2));
+                return NBTCompressedStreamTools.a(new FileInputStream(var2));
             }
         } catch (Exception var3) {
             logger.warning("Failed to load player data for " + playerName);
