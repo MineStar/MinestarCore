@@ -18,6 +18,9 @@
 
 package de.minestar.core.listener;
 
+import java.io.File;
+
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -27,8 +30,11 @@ import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
 
+import de.minestar.core.MinestarCore;
 import de.minestar.core.manager.PlayerManager;
+import de.minestar.core.units.MinestarGroup;
 import de.minestar.core.units.MinestarPlayer;
+import de.minestar.minestarlibrary.events.PlayerChangedNameEvent;
 
 public class ConnectionListener implements Listener {
 
@@ -58,6 +64,42 @@ public class ConnectionListener implements Listener {
             return;
 
         this.onPlayerDisconnect(event.getPlayer());
+    }
+
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onPlayerChangeNick(PlayerChangedNameEvent event) {
+        // get old player
+        MinestarPlayer thisPlayer = this.playerManager.getPlayer(event.getOldName());
+
+        // just to make sure: set nicks
+        thisPlayer.setNickName(event.getNewName());
+        thisPlayer.setListName(event.getNewName());
+
+        // unload both playernames
+        this.playerManager.removePlayer(event.getOldName());
+        this.playerManager.removePlayer(event.getNewName());
+
+        // rename file
+        File oldPlayerFile = new File(new File(MinestarCore.dataFolder, "playerdata"), event.getOldName() + ".dat");
+        File newPlayerFile = new File(new File(MinestarCore.dataFolder, "playerdata"), event.getNewName() + ".dat");
+        newPlayerFile.delete();
+        oldPlayerFile.renameTo(newPlayerFile);
+
+        // update permissions
+        // get old group
+        MinestarGroup oldMSGroup = MinestarCore.getPlayer(event.getOldName()).getMinestarGroup();
+
+        // select world
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "manselect world");
+
+        // add new name to groupmanager-group
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "manuadd " + event.getNewName() + " " + oldMSGroup.getName());
+
+        // remove old user
+        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "manudel " + event.getOldName());
+
+        // reload player
+        this.playerManager.getPlayer(event.getNewName());
     }
 
     private void onPlayerDisconnect(Player player) {
