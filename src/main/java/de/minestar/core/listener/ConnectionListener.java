@@ -75,6 +75,9 @@ public class ConnectionListener implements Listener {
         thisPlayer.setNickName(event.getNewName());
         thisPlayer.setListName(event.getNewName());
 
+        // get old group
+        MinestarGroup oldMSGroup = thisPlayer.getMinestarGroup();
+
         // unload both playernames
         this.playerManager.removePlayer(event.getOldName());
         this.playerManager.removePlayer(event.getNewName());
@@ -85,21 +88,8 @@ public class ConnectionListener implements Listener {
         newPlayerFile.delete();
         oldPlayerFile.renameTo(newPlayerFile);
 
-        // update permissions
-        // get old group
-        MinestarGroup oldMSGroup = MinestarCore.getPlayer(event.getOldName()).getMinestarGroup();
-
-        // select world
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "manselect world");
-
-        // add new name to groupmanager-group
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "manuadd " + event.getNewName() + " " + oldMSGroup.getName());
-
-        // remove old user
-        Bukkit.getServer().dispatchCommand(Bukkit.getConsoleSender(), "manudel " + event.getOldName());
-
         // reload player
-        this.playerManager.getPlayer(event.getNewName());
+        this.playerManager.getPlayer(event.getNewName()).setGroup(oldMSGroup);
     }
 
     private void onPlayerDisconnect(Player player) {
