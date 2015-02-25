@@ -20,7 +20,6 @@ package de.minestar.core.listener;
 
 import java.io.File;
 
-import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -35,6 +34,7 @@ import de.minestar.core.manager.PlayerManager;
 import de.minestar.core.units.MinestarGroup;
 import de.minestar.core.units.MinestarPlayer;
 import de.minestar.minestarlibrary.events.PlayerChangedNameEvent;
+import de.minestar.minestarlibrary.utils.PlayerUtils;
 
 public class ConnectionListener implements Listener {
 
@@ -90,6 +90,11 @@ public class ConnectionListener implements Listener {
 
         // reload player
         this.playerManager.getPlayer(event.getNewName()).setGroup(oldMSGroup);
+
+        Player player = PlayerUtils.getOnlinePlayer(event.getCommandSender());
+        if (player != null) {
+            PlayerUtils.sendInfo(player, MinestarCore.NAME, "Transfer complete.");
+        }
     }
 
     private void onPlayerDisconnect(Player player) {
