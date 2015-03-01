@@ -82,11 +82,9 @@ public class ConnectionListener implements Listener {
         this.playerManager.removePlayer(event.getOldName());
         this.playerManager.removePlayer(event.getNewName());
 
-        // rename file
+        // delete old file
         File oldPlayerFile = new File(new File(MinestarCore.dataFolder, "playerdata"), event.getOldName() + ".dat");
-        File newPlayerFile = new File(new File(MinestarCore.dataFolder, "playerdata"), event.getNewName() + ".dat");
-        newPlayerFile.delete();
-        oldPlayerFile.renameTo(newPlayerFile);
+        oldPlayerFile.delete();
 
         // reload player
         this.playerManager.getPlayer(event.getNewName()).setGroup(oldMSGroup);
