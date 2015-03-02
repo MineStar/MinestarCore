@@ -39,7 +39,7 @@ public class MinestarPlayer {
     private final String playerName;
     private String group;
     private MinestarGroup msGroup;
-    private Data data;
+    private SQLData data;
 
     public MinestarPlayer(String playerName) {
         this.playerName = playerName;
@@ -77,7 +77,7 @@ public class MinestarPlayer {
         this.updateGroup();
 
         // INIT DATA
-        this.data = new Data(new File(MinestarCore.dataFolder, "playerdata"), playerName, DataType.NBT);
+        this.data = new SQLData(playerName);
 
         // LOAD DATA FROM FILE
         this.data.load();

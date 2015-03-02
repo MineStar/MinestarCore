@@ -28,6 +28,7 @@ import org.bukkit.plugin.PluginManager;
 
 import de.minestar.core.listener.ConnectionListener;
 import de.minestar.core.listener.SurvivalListener;
+import de.minestar.core.manager.DatabaseManager;
 import de.minestar.core.manager.PlayerManager;
 import de.minestar.core.units.MinestarPlayer;
 import de.minestar.minestarlibrary.AbstractCore;
@@ -40,6 +41,7 @@ public class MinestarCore extends AbstractCore {
 
     public static File dataFolder;
     public static GroupManager groupManager = null;
+    public static DatabaseManager databaseManager;
 
     /**
      * Manager
@@ -79,6 +81,7 @@ public class MinestarCore extends AbstractCore {
 
     @Override
     protected boolean createManager() {
+        MinestarCore.databaseManager = new DatabaseManager(MinestarCore.NAME, new File(getDataFolder(), "sql_playerData.yml"));
         MinestarCore.playerManager = new PlayerManager();
         return super.createManager();
     }
@@ -92,7 +95,7 @@ public class MinestarCore extends AbstractCore {
     @Override
     protected boolean registerEvents(PluginManager pm) {
         pm.registerEvents(this.connectionListener, this);
-        pm.registerEvents(new SurvivalListener(), this);
+//        pm.registerEvents(new SurvivalListener(), this);
         return super.registerEvents(pm);
     }
 
