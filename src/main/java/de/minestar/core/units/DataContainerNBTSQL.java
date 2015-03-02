@@ -54,6 +54,7 @@ public class DataContainerNBTSQL extends DataContainerNone {
         }
     }
 
+    @SuppressWarnings("rawtypes")
     public void save(String playerName) {
         try {
 

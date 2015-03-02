@@ -18,8 +18,6 @@
 
 package de.minestar.core.units;
 
-import java.io.File;
-
 import org.anjocaido.groupmanager.data.Group;
 import org.anjocaido.groupmanager.data.User;
 import org.bukkit.Bukkit;
@@ -29,8 +27,6 @@ import org.bukkit.entity.Player;
 import com.bukkit.gemo.utils.UtilPermissions;
 
 import de.minestar.core.MinestarCore;
-import de.minestar.minestarlibrary.data.Data;
-import de.minestar.minestarlibrary.data.DataType;
 import de.minestar.minestarlibrary.data.GenericValue;
 import de.minestar.minestarlibrary.utils.PlayerUtils;
 
@@ -41,6 +37,7 @@ public class MinestarPlayer {
     private MinestarGroup msGroup;
     private SQLData data;
 
+    @SuppressWarnings("deprecation")
     public MinestarPlayer(String playerName) {
         this.playerName = playerName;
         if (Bukkit.getPlayer(playerName) != null)
@@ -170,6 +167,7 @@ public class MinestarPlayer {
     /**
      * Update the bukkitplayer
      */
+    @SuppressWarnings("deprecation")
     public void updateBukkitPlayer() {
         // ONLY UPDATE, IF ONLINE
         if (this.isOffline())
@@ -189,6 +187,7 @@ public class MinestarPlayer {
      * 
      * @return the Bukkit-Player
      */
+    @SuppressWarnings("deprecation")
     public Player getBukkitPlayer() {
         // PLAYER MUST BE ONLINE
         if (this.isOffline())
