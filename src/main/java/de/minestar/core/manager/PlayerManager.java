@@ -18,6 +18,7 @@
 
 package de.minestar.core.manager;
 
+import java.util.Collection;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.bukkit.Bukkit;
@@ -42,7 +43,7 @@ public class PlayerManager {
     private void refreshPlayerList() {
         offlinePlayerList = new ConcurrentHashMap<String, MinestarPlayer>();
         onlinePlayerList = new ConcurrentHashMap<String, MinestarPlayer>();
-        Player[] players = Bukkit.getOnlinePlayers();
+        Collection<? extends Player> players = Bukkit.getOnlinePlayers();
         for (Player player : players) {
             this.getPlayer(player);
         }
