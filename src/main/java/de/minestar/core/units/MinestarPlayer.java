@@ -37,7 +37,6 @@ public class MinestarPlayer {
     private MinestarGroup msGroup;
     private SQLData data;
 
-    @SuppressWarnings("deprecation")
     public MinestarPlayer(String playerName) {
         this.playerName = playerName;
         if (Bukkit.getPlayer(playerName) != null)
@@ -167,7 +166,6 @@ public class MinestarPlayer {
     /**
      * Update the bukkitplayer
      */
-    @SuppressWarnings("deprecation")
     public void updateBukkitPlayer() {
         // ONLY UPDATE, IF ONLINE
         if (this.isOffline())
@@ -187,7 +185,6 @@ public class MinestarPlayer {
      * 
      * @return the Bukkit-Player
      */
-    @SuppressWarnings("deprecation")
     public Player getBukkitPlayer() {
         // PLAYER MUST BE ONLINE
         if (this.isOffline())
