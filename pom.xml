@@ -4,7 +4,7 @@
 	<artifactId>MinestarCore</artifactId>
 	<groupId>de.minestar</groupId>
 	<name>MinestarCore</name>
-	<version>1.10.0-R0.1-SNAPSHOT</version>
+	<version>1.10.2-R0.1-SNAPSHOT</version>
 	<repositories>
 		<repository>
 			<id>MinestarNexus</id>
@@ -48,7 +48,7 @@
 		<dependency>
 			<groupId>de.minestar</groupId>
 			<artifactId>MineStarLibrary</artifactId>
-			<version>1.10.0-R0.1-SNAPSHOT</version>
+			<version>1.10.2-R0.1-SNAPSHOT</version>
 		</dependency>
 		<dependency>
 			<groupId>org.anjocaido.groupmanager</groupId>
