@@ -27,6 +27,7 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginManager;
 
 import de.minestar.core.listener.ConnectionListener;
+import de.minestar.core.listener.SurvivalListener;
 import de.minestar.core.manager.DatabaseManager;
 import de.minestar.core.manager.PlayerManager;
 import de.minestar.core.units.MinestarPlayer;
@@ -94,7 +95,7 @@ public class MinestarCore extends AbstractCore {
     @Override
     protected boolean registerEvents(PluginManager pm) {
         pm.registerEvents(this.connectionListener, this);
-//        pm.registerEvents(new SurvivalListener(), this);
+        pm.registerEvents(new SurvivalListener(), this);
         return super.registerEvents(pm);
     }
 
