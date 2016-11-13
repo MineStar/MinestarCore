@@ -18,8 +18,6 @@
 
 package de.minestar.core.listener;
 
-import java.io.File;
-
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;

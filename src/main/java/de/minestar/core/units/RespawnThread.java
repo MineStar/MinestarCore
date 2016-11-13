@@ -18,7 +18,7 @@
 
 package de.minestar.core.units;
 
-import org.bukkit.craftbukkit.v1_8_R3.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_10_R1.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import de.minestar.core.listener.SurvivalListener;

@@ -43,6 +43,17 @@ public enum MinestarGroup {
     public String getName() {
         return name;
     }
+    
+    public String getShort() {
+        switch (name) {
+            case "admins": return "[A]";
+            case "mods": return "[M]";
+            case "pay": return "[P]";
+            case "vip": return "[F]";
+            case "probe": return "[T]";
+            default: return "[D]";
+        }
+    }
 
     public static MinestarGroup getGroup(String groupName) {
         for (MinestarGroup group : MinestarGroup.values())
