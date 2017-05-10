@@ -45,6 +45,7 @@ public class ConnectionListener implements Listener {
     @EventHandler(priority = EventPriority.LOWEST)
     public void onPlayerJoin(PlayerJoinEvent event) {
         MinestarPlayer thisPlayer = this.playerManager.getPlayer(event.getPlayer());
+        PlayerUtils.PLAYERS.put(thisPlayer.getPlayerName().toLowerCase(), thisPlayer.getPlayerName());
         thisPlayer.setOnline();
         thisPlayer.updateGroup();
         thisPlayer.updateBukkitPlayer();
@@ -79,6 +80,8 @@ public class ConnectionListener implements Listener {
         // unload both playernames
         this.playerManager.removePlayer(event.getOldName());
         this.playerManager.removePlayer(event.getNewName());
+        PlayerUtils.PLAYERS.remove(event.getOldName().toLowerCase());
+        PlayerUtils.PLAYERS.put(event.getNewName().toLowerCase(), event.getNewName());
 
         // reload player
         this.playerManager.getPlayer(event.getNewName()).setGroup(oldMSGroup);
